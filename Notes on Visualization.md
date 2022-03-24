@@ -1,0 +1,294 @@
+# Visualization Tools
+
+## Seaborn
+### Style Manager
+
+Seaborn装载了一些默认主题风格，通过sns.set()方法实现
+
+sns.set()可以设置5种风格的图表背景：darkgrid, whitegrid, dark, white, ticks，通过参数style设置，默认情况下为darkgrid风格：
+
+![img](https://pic4.zhimg.com/80/v2-02c5292556531b67326475c142874823_720w.jpg)
+
+Seaborn 调色板palette功能（作图色系）
+
+[Seaborn（三）调色板palette_风度翩翩猪肉王子的博客-CSDN博客_palette参数](https://blog.csdn.net/qq_17249717/article/details/103435739)
+
+[seaborn palette参数各配色方案及显示效果_coolerpan的博客-CSDN博客_palette seaborn](https://blog.csdn.net/panlb1990/article/details/103851983)
+
+### 点、线混合绘图函数 - relplot()
+
+relplot()是seaborn中非常重要的绘图函数，它可以用于绘制散点图和线图，通过参数kind改变绘图类型
+
+- 散点图：relplot(kind='scatter') ## default
+- 线图：relplot(kind='line')
+
+添加多个控制行参数：
+
+![img](https://pic1.zhimg.com/80/v2-bd5bd1663e705ddc97b1ccf074111ae4_720w.jpg)
+
+lineplot() 和 scatter()也可以分别用于绘制线图和散点图
+
+### 绘制线性回归模型-lmplot()函数
+
+lmplot()函数用以绘制回归模型，描述线性关系
+
+可以使用传递参数ci调整置信区间的大小：
+
+![img](https://pic4.zhimg.com/80/v2-7a73e3ca53ec5ce1e87a92d93dc184bb_720w.jpg)
+
+也可以绘制非参数回归模型（局部加权线性回归），传递参数 lowess=True：
+
+![img](https://pic3.zhimg.com/80/v2-96ff7bea158e97b8599487990b3ed80e_720w.jpg)
+
+### 分类散点图 - stripplot()函数
+
+当有一维数据是分类数据时，散点图成了条带形状，这里就用到stripplot()函数
+
+![img](https://pic3.zhimg.com/80/v2-a129a751b53399bad49b7a1754cb5b22_720w.jpg)
+
+stripplot()数与catplot类的子函数，也可通过更换父类catplot中的kind参数实现分类散点图。catplot还有子函数如下所示：
+
+- stripplot()，此时(kind="strip"，默认)；
+- swarmplot()，此时(kind="swarm")；
+- boxplot()，此时(kind="box")；
+- violinplot()，此时(kind="violin")；
+- boxenplot()，此时(kind="boxen")
+- pointplot()，此时(kind="point")；
+- barplot()，此时(kind="bar")；
+- countplot()，此时(kind="count")
+
+## yellowbrick
+
+
+
+## Bubbly
+
+Bubbly is a package for plotting interactive and animated *bubble charts* using *Plotly*. The animated bubble charts can accommodate upto seven variables in total viz. X-axis, Y-axis, Z-axis, time, bubbles, their size and their color in a compact and captivating way. Bubbly is easy to use with plenty of customization, especially suited for use in Jupyter notebooks and is designed to work with `plotly`’s offline mode such as in Kaggle kernels.
+
+[AashitaK/bubbly: A python package for plotting animated and interactive bubble charts using Plotly (github.com)](https://github.com/AashitaK/bubbly)
+
+以Iris数据集为例：
+
+![img](https://pic3.zhimg.com/80/v2-80c4ad3ef86febe5c6c56fa8bae78402_720w.jpg)
+
+这个数据集有6列，6个特征，很多时候做可视化就是为了更好的了解数据，比如这里就是想看每个种类的花有什么特点，怎么样根据其他特征把花分为三类。**因此可以首先绘制一张图尽量多的包含数据点，展示数据信息，从中发现规律。**我们可以利用以下代码完全展示全部维度和数据这里用的bubbly：
+
+```python
+from bubbly.bubbly import bubbleplot 
+from __future__ import division
+from plotly.offline import init_notebook_mode, iplot
+init_notebook_mode()
+
+#这里设置x,y,z轴，气泡，气泡大小，气泡颜色分别代表6列~在二维平面想展示6个维度，除了x,y,z之外，
+#只能用颜色，大小等代表其他维度了，bubbly还可以承受更高维度的数据，可以自己搜索
+
+figure = bubbleplot(dataset=iris, x_column='SepalLengthCm', y_column='PetalLengthCm', z_column='SepalWidthCm',
+    bubble_column='Id', size_column='PetalWidthCm', color_column='Species', 
+    x_title="SepalLength(Cm)", y_title="PetalLength(Cm)", z_title='SepalWidth(Cm)',
+                    title='IRIS Visualization',
+    x_logscale=False,scale_bubble=0.1,height=600)
+
+#展示图片
+
+iplot(figure, config={'scrollzoom': True})
+```
+
+![img](https://pic2.zhimg.com/80/v2-62f430cacdd798b1ef704636a009d0cd_720w.jpg)
+
+利用FacetGrid()函数可以将多种对数据可视化操作映射到同一数据集上
+
+例如 先画直方图：
+
+```python
+# 画不同Species情况下，SepalWidthCm直方图
+g = sns.FacetGrid(iris, col="Species")
+g = g.map(plt.hist, "SepalWidthCm", bins=20)
+```
+
+![img](https://pic1.zhimg.com/80/v2-03d3febb3f09b7a91f829cd71cc5ec30_720w.jpg)
+
+再画KDE图：
+
+```python
+# 画不同Species情况下，PetalLengthCm KDE图
+sns.FacetGrid(iris, hue="Species", size=6) \
+   .map(sns.kdeplot, "PetalLengthCm") \
+   .add_legend()
+```
+
+![img](https://pic3.zhimg.com/80/v2-4c467369e834e710c3e027b3fb68a052_720w.jpg)
+
+这里通过KDE可以说，由于Setosa的KDE与其他两种没有交集，直接可以用Petailength线性区分Setosa与其他两个物种
+
+### KDE 核密度估计
+
+[核密度估计Kernel Density Estimation(KDE)及python代码 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/360982296)
+
+[ 什么是核密度估计？如何感性认识？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/27301358/answer/105267357?from=profile_answer_card)
+
+[ 核密度估计 Kernel Density Estimation(KDE)_NeverMore_7的博客-CSDN博客_核密度估计](https://blog.csdn.net/unixtch/article/details/78556499)
+
+KDE是对直方图的一个自然拓展 采用非参数的方法估计一个分布的概率密度函数
+
+一般估计概率密度会想到先求分布函数，再对其求导得到。一个最简单而有效的估计分布函数的方法是所谓的`经验分布函数`（empirical distribution function）：
+
+![img](https://pic1.zhimg.com/80/ff6e4761af2989d3798105cb6715955c_720w.jpg?source=1940ef5c)
+
+即，F(t)的估计为所有小于t的样本的概率。可以证明，这个估计是almost surely收敛的，有很好的统计性质。如图所示：
+
+![img](https://pic1.zhimg.com/80/d16d85d88d22203abaa188dc67dce753_720w.jpg?source=1940ef5c)
+
+可是这个EDF不是可导的，不够光滑，因而不能通过对该EDF直接求导算密度函数。因此可以近似逼近斜率的方法来求导数：
+
+![[公式]](https://www.zhihu.com/equation?tex=f%28x%29%3D%5Clim_%7Bh%5Crightarrow+0%7D+%5Cfrac%7BF%28x%2Bh%29-F%28x-h%29%7D%7B2h%7D)
+
+把分布函数用上面的经验分布函数替代，那么上式分子上就是落在[x-h,x+h]区间的点的个数。我们可以把f(x)的估计写成：
+
+![[公式]](https://www.zhihu.com/equation?tex=%5Chat%7Bf%7D_h%28x%29%3D%5Cfrac%7B1%7D%7B2h%7D%5Cfrac%7B%5C%23x_i%5Cin%5Bx-h%2Cx%2Bh%5D%7D%7BN%7D%3D%5Cfrac%7B1%7D%7B2Nh%7D%5Csum_%7Bi%3D1%7D%5E%7BN%7D1%28x-h%5Cleq+x_i%5Cleq+x%2Bh%29%3D%5Cfrac%7B1%7D%7BNh%7D%5Csum_%7Bi%3D1%7D%5E%7BN%7D%5Cfrac%7B1%7D%7B2%7D%5Ccdot+1%28%5Cfrac%7B%7Cx-x_i%7C%7D%7Bh%7D%5Cleq+1%29)
+
+h的选择：存在非参数估计里面的bias-variance tradeoff：如果h太大，用于计算的点很多，可以减小方差，但是方法本质要求h→0，bias可能会比较大；如果h太小，bais小了，但是用于计算的点太少，方差又很大。
+
+所以理论上存在一个最小化mean square error的一个h。h的选取应该取决于N，当N越大的时候，我们可以用一个比较小的h，因为较大的N保证了即使比较小的h也足以保证区间内有足够多的点用于计算概率密度。因而，我们通常要求当N→∞，h→0。比如，在这里可以推导出，最优的h应该是N的-1/5次方乘以一个常数，也就是![[公式]](https://www.zhihu.com/equation?tex=h%3Dc%5Ccdot+N%5E%7B-1%2F5%7D)。对于正态分布而言，可以计算出c=1.05×标准差。
+
+另外，我们知道之前的经验分布函数每个点的收敛速度都是√N的，而这里，因为有h的存在（观察估计式，分母上是nh而非n，而nh=O(N^{-4/5})）。所以收敛速度比一般的参数收敛速度要慢很多。
+
+然而，通过上式得到的密度函数不是光滑的，存在阶跃。（可以看作是N张以每个点为中心（均值）的门函数（值为1/(N*2h)，长度为2h) 叠加在一起）
+
+因此，可以将以该点为均值的门函数替换为核函数（常用高斯函数），从而得到一个光滑的密度函数。
+
+**理论推导：**
+
+观察上面的估计式子，如果记 ![[公式]](https://www.zhihu.com/equation?tex=K_0%28t%29%3D%5Cfrac%7B1%7D%7B2%7D%5Ccdot+1%28t%3C1%29)，那么估计式可以写为：
+
+![[公式]](https://www.zhihu.com/equation?tex=%5Chat%7Bf%7D_h%28x%29%3D%5Cfrac%7B1%7D%7Bnh%7D%5Csum_%7Bi%3D1%7D%5E%7BN%7DK_0%28%5Cfrac%7Bx-x_i%7D%7Bh%7D%29)
+
+密度函数的积分：
+
+![[公式]](https://www.zhihu.com/equation?tex=%5Cint+%5Chat%7Bf%28x%29%7D+dx%3D%5Cfrac%7B1%7D%7BNh%7D%5Csum_%7Bi%3D1%7D%5EN%5Cint+K_0%28%5Cfrac%7Bx-x_i%7D%7Bh%7D%29dx%3D%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bi%3D1%7D%5EN%5Cint+K_0%28t%29dt%3D%5Cint+K_0%28t%29dt)
+
+因而只要K的积分等于1，就能保证估计出来的密度函数积分等于1。
+
+例如，用标准正态分布的密度函数作为K，估计就变成了：
+
+![[公式]](https://www.zhihu.com/equation?tex=%5Chat%7Bf%7D_h%28x%29%3D%5Cfrac%7B1%7D%7Bnh%7D%5Csum_%7Bi%3D1%7D%5E%7BN%7D%5Cphi+%28%5Cfrac%7Bx-x_i%7D%7Bh%7D%29)
+
+这个密度函数的估计就变得可导了，而且实数域的积分积起来等于1。直觉上，上式就是一个加权平均，离x越近的x<sub>i</sub>其权重越高。而最开始的利用门函数的估计方式则是在区间内权重相等，区间外权重为0。
+
+将设有N个样本点，对这N个点进行上面的拟合过后，将这N个概率密度函数进行叠加便得到了整个样本集的概率密度函数。例如利用高斯核对X={x1=−2.1,x2=−1.3,x3=−0.4,x4=1.9,x5=5.1,x6=6.2} 六个点的“拟合”结果如下：
+
+![这里写图片描述](https://img-blog.csdn.net/20171116223625487?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdW5peHRjaA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+左边是直方图，bin的大小为2，右边是核密度估计的结果。
+可见将以每个点为均值的高斯函数叠加在一起就得到了总概率密度函数
+
+h越小高斯函数越陡峭，h越大越平滑。当h为无穷大时退化为y=0的线性函数。
+
+#### 带宽h的选择
+
+在核函数确定之后，比如上面选择的高斯核，那么高斯核的方差，也就是h（也叫带宽，也叫窗口，我们这里说的邻域）应该选择多大呢？不同的带宽会导致最后的拟合结果差别很大。同时上面也提到过，理论上h->0的，但h太小，邻域中参与拟合的点就会过少。那么借助机器学习的理论，我们当然可以使用交叉验证选择最好的h。另外，也有一个理论的推导给你选择h提供一些信息。
+在样本集给定的情况下，我们只能对样本点的概率密度进行计算，那拟合过后的概率密度应该核计算的值更加接近才好，基于这一点，我们定义一个误差函数，然后最小化该误差函数便能为h的选择提供一个大致的方向。选择均平方积分误差函数(mean intergrated squared error)，该函数的定义是：
+
+![image-20220322191240526](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191240526.png)
+
+在weak assumptions下， ，其中AMISE为渐进的MISE(这里我没搞懂是怎么推导出来的)。而AMISE有：
+
+![image-20220322191323754](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191323754.png)
+
+其中：
+
+![image-20220322191342905](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191342905.png)
+
+最小化MISE(h)等价于最小化AMISE(h)，求导，令导数为0有：
+
+![image-20220322191402969](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191402969.png)
+
+得：
+
+![image-20220322191423641](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191423641.png)
+
+当核函数确定之后，h公式里的R、m、f” 都可以确定下来，h便存在解析解。如果带宽不是固定的，其变化取决于估计的位置（balloon estimator）或样本点（逐点估计pointwise estimator)，由此可以产生一个非常强大的方法称为自适应或可变带宽核密度估计。
+
+### KDE相关可视化
+
+#### Pairplot
+
+```python
+# Pairplot, 看三个品种在不同的两特征组合中的区分情况，对角线由于X,Y是一个特征，可以用来画KDE
+sns.pairplot(iris.drop("Id", axis=1), hue="Species", size=3, diag_kind="kde")
+```
+
+![img](https://pic2.zhimg.com/80/v2-513a1370696fbc8f363b25b697b47475_720w.jpg)
+
+#### 小提琴图
+
+```python
+# 小提琴图，箱线图与核密度图的结合体，能代表的信息和上图相似
+sns.violinplot(x="Species", y="PetalLengthCm", data=iris, size=6)
+```
+
+![img](https://pic1.zhimg.com/80/v2-b1285d2d53cb97aa209e2a1271625c08_720w.jpg)
+
+### Andrews Curves
+
+In [data visualization](https://en.wikipedia.org/wiki/Data_visualization), an **Andrews plot** or **Andrews curve** is a way to visualize structure in high-dimensional data. It is basically a rolled-down, non-integer version of the Kent–Kiviat [radar m chart](https://en.wikipedia.org/wiki/Radar_chart), or a smoothed version of a [parallel coordinate plot](https://en.wikipedia.org/wiki/Parallel_coordinates). It is named after the statistician David F. Andrews.
+
+A value **x** is a [high-dimensional datapoint](https://en.wikipedia.org/wiki/Real_coordinate_space) if it is an element of ![{\displaystyle \mathbb {R} ^{d}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/a713426956296f1668fce772df3c60b9dde8a685). We can represent high-dimensional data with a number for each of their dimensions, ![{\displaystyle x=\left\{x_{1},x_{2},\ldots ,x_{d}\right\}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/9dd717321df8f5c29f657c29f4de674a3edfa5de). To visualize them, the Andrews plot defines a finite [Fourier series](https://en.wikipedia.org/wiki/Fourier_series):
+
+![{\displaystyle f_{x}(t)={\frac {x_{1}}{\sqrt {2}}}+x_{2}\sin(t)+x_{3}\cos(t)+x_{4}\sin(2t)+x_{5}\cos(2t)+\cdots }](https://wikimedia.org/api/rest_v1/media/math/render/svg/e4c0dd9477fdfa6166f10d2f335aa6b8e29c5413)
+
+This function is then plotted for ![-\pi <t<\pi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/12d88552ec06804c7440e25f2d4f337491f78dd8). Thus each data point may be viewed as a line between ![-\pi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/f2359073fe90a84a705e02f0c1e63b32df850a60) and ![\pi ](https://wikimedia.org/api/rest_v1/media/math/render/svg/9be4ba0bb8df3af72e90a0535fabcc17431e540a). This formula can be thought of as the projection of the data point onto the vector:
+
+![{\displaystyle \left({\frac {1}{\sqrt {2}}},\sin(t),\cos(t),\sin(2t),\cos(2t),\ldots \right)}](https://wikimedia.org/api/rest_v1/media/math/render/svg/42ebe4f593cd69b2150dead852b09f1c60178637)
+
+`If there is structure in the data, it may be visible in the Andrews curves of the data.`
+
+```python
+from pandas.tools.plotting import andrews_curves
+andrews_curves(iris.drop("Id", axis=1), "Species")
+```
+
+![img](https://pic1.zhimg.com/80/v2-097f1649376b1790859761a535e4bd20_720w.jpg)
+
+#### Parallel Coordinates
+
+```python
+# parallel_coordinates 做法是把每个特征放一列，不同物种用不同颜色连起来看看有没有规律
+from pandas.tools.plotting import parallel_coordinates
+parallel_coordinates(iris.drop("Id", axis=1), "Species")
+```
+
+![img](https://pic2.zhimg.com/80/v2-0048308947369963c19e5fb07d4712d1_720w.jpg)
+
+#### Radviz
+
+Radviz可视化原理是将一系列多维空间的点通过非线性方法映射到二维空间的可视化技术，是基于圆形平行坐标系的设计思想而提出的多维可视化方法。圆形的m条半径表示m维空间，使用坐标系中的一点代表多为信息对象，其实现原理参照物理学中物体受力平衡定理。 多维空间的点映射到二维可视空间的位置由弹簧引力分析模型确定。 ([Radviz可视化原理 - CSDN博客](https://link.zhihu.com/?target=https%3A//blog.csdn.net/Haiyang_Duan/article/details/78985225)) ，能展示一些数据的可区分规律。
+
+```python
+# radviz
+from pandas.tools.plotting import radviz
+radviz(iris.drop("Id", axis=1), "Species")
+```
+
+![img](https://pic4.zhimg.com/80/v2-6df194e1208dae4875bf5b3c69dfad97_720w.jpg)
+
+#### 热力图
+
+用颜色的深浅来表征相关系数矩阵每个数据的大小。基于热力图对目标特征相关性分析见：[相关矩阵 Correlation matrix_zzw小凡的博客-CSDN博客_correlation matrix](https://blog.csdn.net/zzw000000/article/details/81205027)
+
+```python
+#特征间相关系数热力图
+f = iris.drop("Id", axis=1).corr()
+sns.heatmap(f, annot=True)
+```
+
+![img](https://pic1.zhimg.com/80/v2-f685856a8388a280274a5e06199beda4_720w.jpg)
+
+数值是皮尔森相关系数，浅颜色表示相关性高，比如Petal.Length（花瓣长度）与 Petal.Width（花瓣宽度）相关性0.96，也就是花瓣长的花，花瓣宽度也大，也就是个大花。
+
+#### Visualization with ML
+
+### Resources
+
+数据项目分析实例：[开发者自述：我是如何从 0 到 1 走进 Kaggle 的 (sohu.com)](https://www.sohu.com/a/143064983_114877)
+
+可视化产品：[SandDance - Demo Vote (microsoft.github.io)](https://microsoft.github.io/SandDance/app/)
