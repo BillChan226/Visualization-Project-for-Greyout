@@ -263,7 +263,11 @@ andrews_curves(iris.drop("Id", axis=1), "Species")
 
 ![img](https://pic1.zhimg.com/80/v2-097f1649376b1790859761a535e4bd20_720w.jpg)
 
+Andrew Curves将高维数据通过傅里叶级数的方式呈现到二维平面上，可以较为heuristically地呈现大量数据在高维空间的分布情况。个人理解是信号的某一频率如果幅值较大，则该信号会呈现出明显的周期。可是假如调换多维数据中任意两个维度的位置，把特征比较明显的维度分配给频率较小的正弦波，现象还是否明显呢？
+
 #### Parallel Coordinates
+
+Parallel coordinates as a way of visualizing multidimensional data are proposed by Inselberg. In this method, coordinate axes are shown as parallel lines that represent features. An n-dimensional point is represented as n − 1 line segments, connected to each of the parallel lines at the appropriate feature value.
 
 ```python
 # parallel_coordinates 做法是把每个特征放一列，不同物种用不同颜色连起来看看有没有规律
@@ -272,6 +276,18 @@ parallel_coordinates(iris.drop("Id", axis=1), "Species")
 ```
 
 ![img](https://pic2.zhimg.com/80/v2-0048308947369963c19e5fb07d4712d1_720w.jpg)
+
+可以较容易地看出哪些特征最能够区分不同种类的数据，如上图的PetalLength和PetalWidth。However，这个方法的缺点是可视化较高维数据的时候coordinates are too dense，想要perceive数据结构比较困难。同样，当数据量较大的时候，interpretation of the results is also very complicated.
+
+##### Hierarchical Parallel Coordinates
+
+HPC是Parallel Coordinates的Variation之一。When visualizing a large data set by the hierarchical parallel coordinates, the number of overlapping lines, obtained by the parallel coordinates, decreases.
+
++ First, the data are grouped into some clusters by one of clustering methods 
+
++ Afterwards, the data are represented on the parallel coordinates, the centers of clusters are highlighted; the color intensity of the members of clusters depends on how far they are from the cluster center; different clusters are displayed by
+
+![HPC](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\HPC.png)
 
 #### Radviz
 
@@ -284,6 +300,8 @@ radviz(iris.drop("Id", axis=1), "Species")
 ```
 
 ![img](https://pic4.zhimg.com/80/v2-6df194e1208dae4875bf5b3c69dfad97_720w.jpg)
+
+Modification：PolyViz 和 GridViz
 
 ### Visualizing Correlations
 
