@@ -36,6 +36,8 @@ WSGI描述了Server与Framework之间通信的规范，简单来说，WSGI规范
 
 （Application）Python Flask脚本增加对应的路由即可；以此形成客户端-Server-Application（Framework）的交互模式
 
+**Python Flask脚本：**
+
 ``` python
 # !/usr/bin/python
 # -*- coding: UTF-8 -*-
@@ -71,6 +73,129 @@ if __name__ == '__main__':
     # 多线程和多进程功能只能开一个     1.processes=True      2.threaded=True
 ```
 
+**C#客户端：**
+
+```c#
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace FlaskClient
+{
+    public partial class FlaskClient : Form
+    {
+        public FlaskClient()
+        {
+            InitializeComponent();
+        }
+
+        private void buttonStart_Click(object sender, EventArgs e)
+        {
+            string log = "";//错误信息
+            string Url = this.textBoxUrl.Text;//功能网址
+            string add1 = this.textBoxAdd1.Text;
+            string add2 = this.textBoxAdd2.Text;
+            string jsonParams = "#" + add1 + "#" + add2 + "#";
+            string result = RequestsPost(Url, jsonParams);
+            if (result == null)
+            {
+                log = "Failed to Connect Flask Server!";
+            }
+            else
+            {
+                if (result.Contains("default"))
+                {
+                    log = "There is an error running the algorithm." + "\r\n" + result;
+                }
+                else
+                {
+                    this.textBoxSum.Text = result;
+                    log = "Test Successed!";
+                }
+            }
+            MessageBox.Show(log);
+        }
+
+        /// <summary>
+        /// 通过网络地址和端口访问数据
+        /// </summary>
+        /// <param name="Url">网络地址</param>
+        /// <param name="jsonParas">json参数</param>
+        /// <returns></returns>
+        public string RequestsPost(string Url, string jsonParas)
+        {
+            string postContent = "";
+            string strURL = Url;
+            //创建一个HTTP请求  
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
+            //Post请求方式  
+            request.Method = "POST";
+            //内容类型
+            request.ContentType = "application/json";
+            //设置参数，并进行URL编码 
+
+            string paraUrlCoded = jsonParas;//System.Web.HttpUtility.UrlEncode(jsonParas);   
+
+            byte[] payload;
+            //将Json字符串转化为字节  
+            payload = System.Text.Encoding.UTF8.GetBytes(paraUrlCoded);
+            //设置请求的ContentLength 
+            request.ContentLength = payload.Length;
+
+            //发送请求，获得请求流 
+            Stream writer;
+            try
+            {
+                writer = request.GetRequestStream();//获取用于写入请求数据的Stream对象
+            }
+            catch (Exception)
+            {
+                writer = null;
+                MessageBox.Show("连接服务器失败!");
+                return null;
+            }
+            //将请求参数写入流
+            writer.Write(payload, 0, payload.Length);
+            writer.Close();//关闭请求流
+            HttpWebResponse response;
+            try
+            {
+                //获得响应流
+                response = (HttpWebResponse)request.GetResponse();
+            }
+            catch (WebException ex)
+            {
+                response = ex.Response as HttpWebResponse;
+                postContent = "default: The response is null." + "\r\n" + "Exception: " + ex.Message;
+            }
+            if (response != null)
+            {
+                try
+                {
+                    Stream s = response.GetResponseStream();
+                    StreamReader sRead = new StreamReader(s);
+                    postContent = sRead.ReadToEnd();
+                    sRead.Close();
+                }
+                catch (Exception e)
+                {
+                    postContent = "default: The data stream is not readable." + "\r\n" + e.Message;
+                }
+            }
+            return postContent;//返回Json数据
+        }
+    }
+}
+```
+
 
 
 ### DAL层
@@ -79,7 +204,7 @@ if __name__ == '__main__':
 
 [MySQL :: MySQL Connector/NET Developer Guide :: 6 Connector/NET Tutorials](https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials.html)
 
-
+[C# - MySQL数据库编程 简明教程 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/28401873)
 
 
 
