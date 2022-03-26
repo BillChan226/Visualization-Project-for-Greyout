@@ -40,7 +40,7 @@ lmplot()函数用以绘制回归模型，描述线性关系
 
 ![img](https://pic3.zhimg.com/80/v2-96ff7bea158e97b8599487990b3ed80e_720w.jpg)
 
-### 分类散点图 - stripplot()函数
+### **分类散点图 - stripplot()函数**
 
 当有一维数据是分类数据时，散点图成了条带形状，这里就用到stripplot()函数
 
@@ -56,6 +56,35 @@ stripplot()数与catplot类的子函数，也可通过更换父类catplot中的k
 - pointplot()，此时(kind="point")；
 - barplot()，此时(kind="bar")；
 - countplot()，此时(kind="count")
+
+### 工具函数
+
+利用**FacetGrid()函数**可以将多种对数据可视化操作映射到同一数据集上
+
+例如 先画直方图：
+
+```python
+# 画不同Species情况下，SepalWidthCm直方图
+g = sns.FacetGrid(iris, col="Species")
+g = g.map(plt.hist, "SepalWidthCm", bins=20)
+```
+
+![img](https://pic1.zhimg.com/80/v2-03d3febb3f09b7a91f829cd71cc5ec30_720w.jpg)
+
+再画KDE图：
+
+```python
+# 画不同Species情况下，PetalLengthCm KDE图
+sns.FacetGrid(iris, hue="Species", size=6) \
+   .map(sns.kdeplot, "PetalLengthCm") \
+   .add_legend()
+```
+
+![img](https://pic3.zhimg.com/80/v2-4c467369e834e710c3e027b3fb68a052_720w.jpg)
+
+这里通过KDE可以看出，由于Setosa的KDE与其他两种没有交集，直接可以用Petailength线性区分Setosa与其他两个物种
+
+
 
 ## yellowbrick
 
@@ -95,32 +124,15 @@ iplot(figure, config={'scrollzoom': True})
 
 ![img](https://pic2.zhimg.com/80/v2-62f430cacdd798b1ef704636a009d0cd_720w.jpg)
 
-利用FacetGrid()函数可以将多种对数据可视化操作映射到同一数据集上
 
-例如 先画直方图：
 
-```python
-# 画不同Species情况下，SepalWidthCm直方图
-g = sns.FacetGrid(iris, col="Species")
-g = g.map(plt.hist, "SepalWidthCm", bins=20)
-```
+# Visualization Strategies
 
-![img](https://pic1.zhimg.com/80/v2-03d3febb3f09b7a91f829cd71cc5ec30_720w.jpg)
+## Geometric Methods
 
-再画KDE图：
+### Visualizing Distrubution 
 
-```python
-# 画不同Species情况下，PetalLengthCm KDE图
-sns.FacetGrid(iris, hue="Species", size=6) \
-   .map(sns.kdeplot, "PetalLengthCm") \
-   .add_legend()
-```
-
-![img](https://pic3.zhimg.com/80/v2-4c467369e834e710c3e027b3fb68a052_720w.jpg)
-
-这里通过KDE可以说，由于Setosa的KDE与其他两种没有交集，直接可以用Petailength线性区分Setosa与其他两个物种
-
-### KDE 核密度估计
+#### KDE 核密度估计
 
 [核密度估计Kernel Density Estimation(KDE)及python代码 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/360982296)
 
@@ -183,7 +195,7 @@ h的选择：存在非参数估计里面的bias-variance tradeoff：如果h太�
 
 h越小高斯函数越陡峭，h越大越平滑。当h为无穷大时退化为y=0的线性函数。
 
-#### 带宽h的选择
+##### 带宽h的选择
 
 在核函数确定之后，比如上面选择的高斯核，那么高斯核的方差，也就是h（也叫带宽，也叫窗口，我们这里说的邻域）应该选择多大呢？不同的带宽会导致最后的拟合结果差别很大。同时上面也提到过，理论上h->0的，但h太小，邻域中参与拟合的点就会过少。那么借助机器学习的理论，我们当然可以使用交叉验证选择最好的h。另外，也有一个理论的推导给你选择h提供一些信息。
 在样本集给定的情况下，我们只能对样本点的概率密度进行计算，那拟合过后的概率密度应该核计算的值更加接近才好，基于这一点，我们定义一个误差函数，然后最小化该误差函数便能为h的选择提供一个大致的方向。选择均平方积分误差函数(mean intergrated squared error)，该函数的定义是：
@@ -208,9 +220,9 @@ h越小高斯函数越陡峭，h越大越平滑。当h为无穷大时退化为y=
 
 当核函数确定之后，h公式里的R、m、f” 都可以确定下来，h便存在解析解。如果带宽不是固定的，其变化取决于估计的位置（balloon estimator）或样本点（逐点估计pointwise estimator)，由此可以产生一个非常强大的方法称为自适应或可变带宽核密度估计。
 
-### KDE相关可视化
+#### KDE相关可视化
 
-#### Pairplot
+##### Pairplot
 
 ```python
 # Pairplot, 看三个品种在不同的两特征组合中的区分情况，对角线由于X,Y是一个特征，可以用来画KDE
@@ -219,7 +231,7 @@ sns.pairplot(iris.drop("Id", axis=1), hue="Species", size=3, diag_kind="kde")
 
 ![img](https://pic2.zhimg.com/80/v2-513a1370696fbc8f363b25b697b47475_720w.jpg)
 
-#### 小提琴图
+##### 小提琴图
 
 ```python
 # 小提琴图，箱线图与核密度图的结合体，能代表的信息和上图相似
@@ -228,7 +240,9 @@ sns.violinplot(x="Species", y="PetalLengthCm", data=iris, size=6)
 
 ![img](https://pic1.zhimg.com/80/v2-b1285d2d53cb97aa209e2a1271625c08_720w.jpg)
 
-### Andrews Curves
+### Visualizing Data Structure
+
+#### Andrews Curves
 
 In [data visualization](https://en.wikipedia.org/wiki/Data_visualization), an **Andrews plot** or **Andrews curve** is a way to visualize structure in high-dimensional data. It is basically a rolled-down, non-integer version of the Kent–Kiviat [radar m chart](https://en.wikipedia.org/wiki/Radar_chart), or a smoothed version of a [parallel coordinate plot](https://en.wikipedia.org/wiki/Parallel_coordinates). It is named after the statistician David F. Andrews.
 
@@ -271,6 +285,8 @@ radviz(iris.drop("Id", axis=1), "Species")
 
 ![img](https://pic4.zhimg.com/80/v2-6df194e1208dae4875bf5b3c69dfad97_720w.jpg)
 
+### Visualizing Correlations
+
 #### 热力图
 
 用颜色的深浅来表征相关系数矩阵每个数据的大小。基于热力图对目标特征相关性分析见：[相关矩阵 Correlation matrix_zzw小凡的博客-CSDN博客_correlation matrix](https://blog.csdn.net/zzw000000/article/details/81205027)
@@ -285,9 +301,13 @@ sns.heatmap(f, annot=True)
 
 数值是皮尔森相关系数，浅颜色表示相关性高，比如Petal.Length（花瓣长度）与 Petal.Width（花瓣宽度）相关性0.96，也就是花瓣长的花，花瓣宽度也大，也就是个大花。
 
-#### Visualization with ML
+### Visualization with ML
 
-### Resources
+
+
+
+
+# Resources
 
 数据项目分析实例：[开发者自述：我是如何从 0 到 1 走进 Kaggle 的 (sohu.com)](https://www.sohu.com/a/143064983_114877)
 

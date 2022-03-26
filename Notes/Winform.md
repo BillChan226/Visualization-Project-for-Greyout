@@ -26,7 +26,103 @@ Models 实体模型层（与MySql表有映射关系）
 
 Common 辅助工具层
 
+- 用户自定义特性：用于在运行时传递程序中的各种元素（例如类、方法、结构、枚举、组件等）的行为信息的声明性标签
+  - TableAttribute：映射表名
+  - ColumnAttribute：映射列名
+  - PrimaryKeyAttribute：标注主键列名
+
 Communicate 通信类库
+
+### Models层搭建
+
+实体模型层（类：一系列的属性 --表中的列名）
+
+**<u>DModels</u>** --数据表对应的实体类
+
+例：仓库管理系统用户实体类对应MySql用户表：
+
+![image-20220324143029181](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220324143029181.png)
+
+**<u>UIModels</u>** -- UI层，BLL层的实体类
+
+**<u>VModels</u>** -- 视图对应的实体类（用视图来简化查询）
+
+### Common 辅助工具层
+
+**特性**（Attribute）：特性是一种允许我们向程序集增加元数据的语言结构，它是用于保存程序结构信息的某种特殊类型的类。[C# 自定义特性 - JohnYang819 - 博客园 (cnblogs.com)](https://www.cnblogs.com/johnyang/p/15228269.html)
+
+可以通过使用特性向程序添加声明性信息。一个声明性标签是通过放置在它所应用的元素前面的方括号（[ ]）来描述的。
+
+根据惯例，特性名使用Pascal命名法并且以`Attribute`后缀结尾。当为目标应用特性时，我们可以不使用后缀。例如对于`SerializableAttribute`和`MyAttributeAttribute`这两个特性，我们在把他们应用到结构时可以使用`Serializable`和`MyAttribute`短名称。
+
+所有特性类都派生自`System.Attribute`，用户自定义的特殊类叫做自定义特性。
+
+#### 声明自定义特性
+
+- 派生自`System.Attribute`
+- 起一个以后缀为`Attribute`结尾的名字
+
+为安全起见，建议声明一个`sealed`的特性类
+
+- 由于特性持有目标的信息，所以特性类的公共成员只能是：字段，属性，构造函数。
+
+#### 使用特性的构造函数
+
+和其他类一样，都有构造函数，每一个特性至少必须有一个公共构造函数，如果不声明构造函数，编译器会为我们产生一个隐式，公共且无参的构造函数，也可以被重载，**声明构造函数时，必须使用类全名（即包括后缀）**。在应用时，才可以使用**短名称（不包括后缀）**。
+
+```c#
+[MyAttribute("Holds a value")] //使用了一个字符串的构造函数，它只是声明语句，只有特性的消费者访问特性时候才能调用构造函数，它不会决定什么时候构造特性类的对象。
+public int MyField;
+```
+
+#### 限制特性
+
+特性本身就是类，有一个很重要的**预定义特性**可以应用到自定义特性上，那就是`AttributeUsage`特性，可以用它来限制特性使用在某个目标类型上。
+
+例如，如果我们希望自定义特性`MyAttribute`只应用到方法上，那么可以以如下方式使用`AttributeUsage`：
+
+```c#
+[AttributeUsage(AttributeTarget.Method)]
+public sealed class MyAttributeAttribute:System.Attribute{...}
+```
+
+`AttributeTarget`的枚举值成员：
+
+| `All`              | `Assembly`  | `Class`       | `Constructor` |
+| :----------------- | ----------- | ------------- | ------------- |
+| `Delegate`         | `Enum`      | `Event`       | `Field`       |
+| `GenericParameter` | `Interface` | `Method`      | `Module`      |
+| `Parameter`        | `Property`  | `ReturnValue` | `Struct`      |
+
+### AttributeHelper --静态类
+
+**扩展方法**：必须是静态类中的静态类。扩展方法是C# 3.0 中新增特性，可在不修改源类代码情况，通过ADD File 模式对源代码功能扩展。其要求如下:
+
+a.扩展方法需包含在 static 修饰类中.
+
+b.扩展实现需是静态形式。
+
+c.扩展方法第一个参数 前缀为 this , 表示需要扩展类对象，从第二个参数开始，为扩展方法参数列表。
+
+在仓库温控系统项目中，利用AttributeHelper向Type类添加（从Attribute找到MySql数据库中数据表的名称的）方法，来完成Models实体模型与MySql数据表名的映射。
+
+### PropertyHelper
+
+通过反射方法获取指定类名的指定列名的属性数组
+
+在该项目中：
+
+作用的类型：实体类 服务于后面的Insert Update Select等函数
+
+任务：解析以”，“分隔的字符串，并返回这些字符串指定的部分列的属性数组。
+
+### DAL层
+
+C#操作MySql：
+
+[MySQL :: MySQL Connector/NET Developer Guide :: 6 Connector/NET Tutorials](https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials.html)
+
+[C# - MySQL数据库编程 简明教程 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/28401873)
 
 ## Form
 
