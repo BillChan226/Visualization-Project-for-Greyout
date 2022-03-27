@@ -315,7 +315,7 @@ Modification：PolyViz 和 GridViz
 
 将维度锚点（dimensional anchor）替换成线段（segments of lines），以此来减少因为特征之间比例近似而造成的数据点重叠。
 
-![PolyViz](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\PolyViz.png)
+![PolyViz](https://s2.loli.net/2022/03/27/sA83kYpNu2WFelr.png)
 
 #### Visualizing Correlations
 
@@ -329,7 +329,7 @@ f = iris.drop("Id", axis=1).corr()
 sns.heatmap(f, annot=True)
 ```
 
-![img](https://pic1.zhimg.com/80/v2-f685856a8388a280274a5e06199beda4_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/FtexinVbTYRPXIO.jpg)
 
 数值是皮尔森相关系数，浅颜色表示相关性高，比如Petal.Length（花瓣长度）与 Petal.Width（花瓣宽度）相关性0.96，也就是花瓣长的花，花瓣宽度也大，也就是个大花。
 
@@ -343,7 +343,7 @@ Chernoff faces are designed by Chernoff for visualization of multidimensional da
 
 The Iris visualized by Chernoff faces, are presented below, where sepal length corresponds to the size of face, sepal width corresponds to the shape of forehead, petal length corresponds to the shape of jaw, and petal width corresponds to the length of nose.
 
-![Chernoff Faces](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Chernoff Faces.png)
+![Chernoff Faces](https://s2.loli.net/2022/03/27/vBt6ZkIE5oseJ9q.png)
 
 作图工具：Matlab
 
@@ -353,7 +353,7 @@ The Iris visualized by Chernoff faces, are presented below, where sepal length c
 
 Each object is displayed by a stylized star. In the star plot, the features are represented as spokes of a wheel circle, but their lengths correspond to the values of features. The angles between the neighboring spokes are equal. The outer ends of the neighboring spokes are connected by line segments.
 
-![Star Glyphs](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Star Glyphs.png)
+![Star Glyphs](https://s2.loli.net/2022/03/27/aIME3Ls4PVU1iCW.png)
 
 比较的是各组数据各特征的大小和比例关系。
 
@@ -371,7 +371,7 @@ Hierarchical displays create a structure of an image such that some features are
 + 不断重复这个过程（选出两个新的特征，进一步划分格子），直到所有的特征都被表示出来
 + 将有数据点的值落在对应小区间范围里的那个grid染色
 
-![Dimensional Stacking](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Dimensional Stacking.png)
+![Dimensional Stacking](https://s2.loli.net/2022/03/27/3RdaHzhLAeQ4NwW.png)
 
 注意：数据的维数最好不要超过8；个人认为，为了使可视化的结果更容易理解（同类数据成簇），尽量先选择能划分不同种类数据的特征以及不能明显划分同类数据集的特征。
 
@@ -397,7 +397,7 @@ Trellis Display方法与Dimensional Stacking类似，也是通过选取一定的
 
 e.g. 保证相邻两点距离相等（线性变换无法（约束方程n-1个，自由变量2个 --旋转变换的情况））
 
-![image-20220327100418820](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220327100418820.png)
+![image-20220327100418820](https://s2.loli.net/2022/03/27/eLiTAvGtl4ZVIp8.png)
 
 #### Proximity Measures
 
@@ -405,27 +405,27 @@ The aim of projection methods is to transform multidimensional data to a low-dim
 
 **Minkowski Distance**
 
-![Minkowski Distance](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Minkowski Distance.png)
+![Minkowski Distance.png](https://s2.loli.net/2022/03/27/t5dApZQ4uMqJwGI.png)
 
 即连接两点的向量的各范数
 
 q = 1：Manhattan Distance；
 
-![Manhattan Distance](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Manhattan Distance.png)
+![Manhattan Distance](https://s2.loli.net/2022/03/27/rMQyu1BTtgfaSos.png)
 
 q = 2：Euclidean Distance；
 
-![Euclidean Distance](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Euclidean Distance.png)
+![Euclidean Distance](https://s2.loli.net/2022/03/27/YEPQiWo96gbN12y.png)
 
 q = ∞：Chebyshev Distance；
 
-![Chebyshev Distance](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Chebyshev Distance.png)
+![Chebyshev Distance](https://s2.loli.net/2022/03/27/NUuD2VdJHrK9IZ8.png)
 
 **Canberra Distance**
 
 Weighted version of manhattan distance
 
-<img src="https://img-blog.csdnimg.cn/20190104221226360.png" alt="img"  />
+<img src="https://s2.loli.net/2022/03/27/ON9PIryYtLzfUKx.png" alt="img"  />
 
 # Resources
 
