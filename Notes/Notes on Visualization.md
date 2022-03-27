@@ -427,6 +427,14 @@ Weighted version of manhattan distance
 
 <img src="https://s2.loli.net/2022/03/27/ON9PIryYtLzfUKx.png" alt="img"  />
 
+**Bray Curtis Distance**
+
+Bray Curtis距离主要用于生态学和环境科学，计算坐标之间的距离。该距离取值在[0,1]之间。它也可以用来计算样本之间的差异。
+
+![img](https://s2.loli.net/2022/03/27/5QtqCYnLT7deZVR.png)
+
+
+
 # Resources
 
 数据项目分析实例：[开发者自述：我是如何从 0 到 1 走进 Kaggle 的 (sohu.com)](https://www.sohu.com/a/143064983_114877)
