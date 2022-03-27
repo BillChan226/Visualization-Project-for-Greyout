@@ -128,11 +128,13 @@ iplot(figure, config={'scrollzoom': True})
 
 # Visualization Strategies
 
-## Geometric Methods
+## Direct Visualization
 
-### Visualizing Distrubution 
+### Geometric Methods
 
-#### KDE 核密度估计
+#### Visualizing Distrubution 
+
+##### KDE 核密度估计
 
 [核密度估计Kernel Density Estimation(KDE)及python代码 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/360982296)
 
@@ -195,7 +197,7 @@ h的选择：存在非参数估计里面的bias-variance tradeoff：如果h太�
 
 h越小高斯函数越陡峭，h越大越平滑。当h为无穷大时退化为y=0的线性函数。
 
-##### 带宽h的选择
+###### 带宽h的选择
 
 在核函数确定之后，比如上面选择的高斯核，那么高斯核的方差，也就是h（也叫带宽，也叫窗口，我们这里说的邻域）应该选择多大呢？不同的带宽会导致最后的拟合结果差别很大。同时上面也提到过，理论上h->0的，但h太小，邻域中参与拟合的点就会过少。那么借助机器学习的理论，我们当然可以使用交叉验证选择最好的h。另外，也有一个理论的推导给你选择h提供一些信息。
 在样本集给定的情况下，我们只能对样本点的概率密度进行计算，那拟合过后的概率密度应该核计算的值更加接近才好，基于这一点，我们定义一个误差函数，然后最小化该误差函数便能为h的选择提供一个大致的方向。选择均平方积分误差函数(mean intergrated squared error)，该函数的定义是：
@@ -220,7 +222,7 @@ h越小高斯函数越陡峭，h越大越平滑。当h为无穷大时退化为y=
 
 当核函数确定之后，h公式里的R、m、f” 都可以确定下来，h便存在解析解。如果带宽不是固定的，其变化取决于估计的位置（balloon estimator）或样本点（逐点估计pointwise estimator)，由此可以产生一个非常强大的方法称为自适应或可变带宽核密度估计。
 
-#### KDE相关可视化
+##### KDE相关可视化
 
 ##### Pairplot
 
@@ -240,9 +242,11 @@ sns.violinplot(x="Species", y="PetalLengthCm", data=iris, size=6)
 
 ![img](https://pic1.zhimg.com/80/v2-b1285d2d53cb97aa209e2a1271625c08_720w.jpg)
 
-### Visualizing Data Structure
+#### Visualizing Data Structure
 
-#### Andrews Curves
+##### Andrews Curves
+
+体现每条数据的各特征的分布情况。
 
 In [data visualization](https://en.wikipedia.org/wiki/Data_visualization), an **Andrews plot** or **Andrews curve** is a way to visualize structure in high-dimensional data. It is basically a rolled-down, non-integer version of the Kent–Kiviat [radar m chart](https://en.wikipedia.org/wiki/Radar_chart), or a smoothed version of a [parallel coordinate plot](https://en.wikipedia.org/wiki/Parallel_coordinates). It is named after the statistician David F. Andrews.
 
@@ -265,7 +269,9 @@ andrews_curves(iris.drop("Id", axis=1), "Species")
 
 Andrew Curves将高维数据通过傅里叶级数的方式呈现到二维平面上，可以较为heuristically地呈现大量数据在高维空间的分布情况。个人理解是信号的某一频率如果幅值较大，则该信号会呈现出明显的周期。可是假如调换多维数据中任意两个维度的位置，把特征比较明显的维度分配给频率较小的正弦波，现象还是否明显呢？
 
-#### Parallel Coordinates
+##### Parallel Coordinates
+
+体现每条数据的各特征的分布情况。
 
 Parallel coordinates as a way of visualizing multidimensional data are proposed by Inselberg. In this method, coordinate axes are shown as parallel lines that represent features. An n-dimensional point is represented as n − 1 line segments, connected to each of the parallel lines at the appropriate feature value.
 
@@ -279,7 +285,7 @@ parallel_coordinates(iris.drop("Id", axis=1), "Species")
 
 可以较容易地看出哪些特征最能够区分不同种类的数据，如上图的PetalLength和PetalWidth。However，这个方法的缺点是可视化较高维数据的时候coordinates are too dense，想要perceive数据结构比较困难。同样，当数据量较大的时候，interpretation of the results is also very complicated.
 
-##### Hierarchical Parallel Coordinates
+###### Hierarchical Parallel Coordinates
 
 HPC是Parallel Coordinates的Variation之一。When visualizing a large data set by the hierarchical parallel coordinates, the number of overlapping lines, obtained by the parallel coordinates, decreases.
 
@@ -289,7 +295,9 @@ HPC是Parallel Coordinates的Variation之一。When visualizing a large data set
 
 ![HPC](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\HPC.png)
 
-#### Radviz
+##### Radviz
+
+体现每条数据各特征之间的大小（比例）关系。大小比例近似的数据分布在一起。
 
 Radviz可视化原理是将一系列多维空间的点通过非线性方法映射到二维空间的可视化技术，是基于圆形平行坐标系的设计思想而提出的多维可视化方法。圆形的m条半径表示m维空间，使用坐标系中的一点代表多为信息对象，其实现原理参照物理学中物体受力平衡定理。 多维空间的点映射到二维可视空间的位置由弹簧引力分析模型确定。 ([Radviz可视化原理 - CSDN博客](https://link.zhihu.com/?target=https%3A//blog.csdn.net/Haiyang_Duan/article/details/78985225)) ，能展示一些数据的可区分规律。
 
@@ -303,9 +311,15 @@ radviz(iris.drop("Id", axis=1), "Species")
 
 Modification：PolyViz 和 GridViz
 
-### Visualizing Correlations
+###### PolyViz
 
-#### 热力图
+将维度锚点（dimensional anchor）替换成线段（segments of lines），以此来减少因为特征之间比例近似而造成的数据点重叠。
+
+![PolyViz](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\PolyViz.png)
+
+#### Visualizing Correlations
+
+##### 热力图
 
 用颜色的深浅来表征相关系数矩阵每个数据的大小。基于热力图对目标特征相关性分析见：[相关矩阵 Correlation matrix_zzw小凡的博客-CSDN博客_correlation matrix](https://blog.csdn.net/zzw000000/article/details/81205027)
 
@@ -319,11 +333,99 @@ sns.heatmap(f, annot=True)
 
 数值是皮尔森相关系数，浅颜色表示相关性高，比如Petal.Length（花瓣长度）与 Petal.Width（花瓣宽度）相关性0.96，也就是花瓣长的花，花瓣宽度也大，也就是个大花。
 
-### Visualization with ML
+#### Visualization with ML
+
+#### Iconographic Displays
+
+##### Chernoff Faces
+
+Chernoff faces are designed by Chernoff for visualization of multidimensional data. In Chernoff faces, data features are mapped to facial features, such as the angle of eyes, the width of a nose, etc. 
+
+The Iris visualized by Chernoff faces, are presented below, where sepal length corresponds to the size of face, sepal width corresponds to the shape of forehead, petal length corresponds to the shape of jaw, and petal width corresponds to the length of nose.
+
+![Chernoff Faces](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Chernoff Faces.png)
+
+作图工具：Matlab
+
+**总结：**该方法和Andrews Curves, Parallel Coordinates以及RadViz方法类似，都是想通过把高维的数据的各维度通过一个具有多个特征的二维平面物体呈现出来。Andrews Curves想通过投射到一条曲线上（曲线可被分解成若干个不同频率的正弦波组成）；Parallel Coordinates想通过投射到一条折线上（折现具有若干段）；RadViz想通过投射到一个满足若干弹簧弹力合力为零的物理系统上；Chernoff方法想通过投射到脸部特征上（脸具有多个特征：眼睛的角度、鼻翼宽度等）
+
+**Stars**
+
+Each object is displayed by a stylized star. In the star plot, the features are represented as spokes of a wheel circle, but their lengths correspond to the values of features. The angles between the neighboring spokes are equal. The outer ends of the neighboring spokes are connected by line segments.
+
+![Star Glyphs](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Star Glyphs.png)
+
+比较的是各组数据各特征的大小和比例关系。
+
+#### Hierachical Displays
+
+Hierarchical displays create a structure of an image such that some features are embedded in displays of other features. 
+
+##### Dimensional Stacking
+
+[XmdvTool Home Page: Downloads (wpi.edu)](https://davis.wpi.edu/~xmdv/downloadxmdv.shtml)
+
++ 选中两个特征，根据每个特征的取值将取值范围分为几个小区间（不超过5）；
++ 选中的两个特征（outer features）将矩阵平面划分成n1*n2个小格子（grid）（n1和n2分别为outer features小区间的数量）；
++ 再选出两个特征（inner features），这两个特征再将outer features划分出的每个较大格子划分成n3*n4个小格子；
++ 不断重复这个过程（选出两个新的特征，进一步划分格子），直到所有的特征都被表示出来
++ 将有数据点的值落在对应小区间范围里的那个grid染色
+
+![Dimensional Stacking](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Dimensional Stacking.png)
+
+注意：数据的维数最好不要超过8；个人认为，为了使可视化的结果更容易理解（同类数据成簇），尽量先选择能划分不同种类数据的特征以及不能明显划分同类数据集的特征。
+
+##### Trellis Display
+
+Trellis Display方法与Dimensional Stacking类似，也是通过选取一定的维度将整张图先划分成若干个小块，再利用这些小块呈现剩余特征的分布。与Dimensional Stacking方法不同的是，Trellis Display方法使用散点图刻画最内层的两个特征的分布。因此Outer features可以尽可能选择取值集合变量较少的离散变量，将取值集合较大的特征留在内层呈现。两个方法可以灵活利用subrange的划分方式（遍历特征离散值、划分连续区间等）来混合使用。
+
+![Trellis Display](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Trellis Display.png)
 
 
 
+## Dimensionality Reduction
 
+同维度线性变换：变换矩阵A为n行n列
+
+**rotation**
+
+![image-20220327095408167](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220327095408167.png)
+
+降维线性变换：变换矩阵A为n行d列，且d<n
+
+非线性变换：The nonlinear transformation is more complicated than the linear one and requires more time-consuming computations. However, such a transformation allows us to preserve the characteristics of multidimensional data better as compared with the linear transformation if d < n.
+
+e.g. 保证相邻两点距离相等（线性变换无法（约束方程n-1个，自由变量2个 --旋转变换的情况））
+
+![image-20220327100418820](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220327100418820.png)
+
+#### Proximity Measures
+
+The aim of projection methods is to transform multidimensional data to a low-dimensional space so that the **proximity of the data was possibly preserved**. So proximity measures should be defined first.
+
+**Minkowski Distance**
+
+![Minkowski Distance](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Minkowski Distance.png)
+
+即连接两点的向量的各范数
+
+q = 1：Manhattan Distance；
+
+![Manhattan Distance](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Manhattan Distance.png)
+
+q = 2：Euclidean Distance；
+
+![Euclidean Distance](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Euclidean Distance.png)
+
+q = ∞：Chebyshev Distance；
+
+![Chebyshev Distance](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Chebyshev Distance.png)
+
+**Canberra Distance**
+
+Weighted version of manhattan distance
+
+<img src="https://img-blog.csdnimg.cn/20190104221226360.png" alt="img"  />
 
 # Resources
 
