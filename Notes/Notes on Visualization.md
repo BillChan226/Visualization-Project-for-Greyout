@@ -184,7 +184,7 @@ h的选择：存在非参数估计里面的bias-variance tradeoff：如果h太�
 
 例如，用标准正态分布的密度函数作为K，估计就变成了：
 
-![[公式]](https://www.zhihu.com/equation?tex=%5Chat%7Bf%7D_h%28x%29%3D%5Cfrac%7B1%7D%7Bnh%7D%5Csum_%7Bi%3D1%7D%5E%7BN%7D%5Cphi+%28%5Cfrac%7Bx-x_i%7D%7Bh%7D%29)
+![[公式]](https://www.zhihu.com/equation?tex=\hat{f}_h(x)%3D\frac{1}{nh}\sum_{i%3D1}^{N}\phi+(\frac{x-x_i}{h}))
 
 这个密度函数的估计就变得可导了，而且实数域的积分积起来等于1。直觉上，上式就是一个加权平均，离x越近的x<sub>i</sub>其权重越高。而最开始的利用门函数的估计方式则是在区间内权重相等，区间外权重为0。
 
