@@ -158,7 +158,7 @@ KDE是对直方图的一个自然拓展 采用非参数的方法估计一个分�
 
 把分布函数用上面的经验分布函数替代，那么上式分子上就是落在[x-h,x+h]区间的点的个数。我们可以把f(x)的估计写成：
 
-![[公式]](https://www.zhihu.com/equation?tex=\hat{f}_h(x)%3D\frac{1}{2h}\frac{\%23x_i\in[x-h%2Cx%2Bh]}{N}%3D\frac{1}{2Nh}\sum_{i%3D1}^{N}1(x-h\leq+x_i\leq+x%2Bh)%3D\frac{1}{Nh}\sum_{i%3D1}^{N}\frac{1}{2}\cdot+1(\frac{|x-x_i|}{h}\leq+1))
+![[公式]](https://www.zhihu.com/equation?tex=\hat{f}_h(x)%3D\frac{1}{2h}\frac{x_i\in[x-h%2Cx%2Bh]}{N}%3D\frac{1}{2Nh}\sum_{i%3D1}^{N}1(x-h\leq+x_i\leq+x%2Bh)%3D\frac{1}{Nh}\sum_{i%3D1}^{N}\frac{1}{2}\cdot+1(\frac{|x-x_i|}{h}\leq+1))
 
 h的选择：存在非参数估计里面的bias-variance tradeoff：如果h太大，用于计算的点很多，可以减小方差，但是方法本质要求h→0，bias可能会比较大；如果h太小，bais小了，但是用于计算的点太少，方差又很大。
 
@@ -425,13 +425,23 @@ q = ∞：Chebyshev Distance；
 
 Weighted version of manhattan distance
 
-<img src="https://s2.loli.net/2022/03/27/ON9PIryYtLzfUKx.png" alt="img"  />
+<img src="https://s2.loli.net/2022/03/27/ON9PIryYtLzfUKx.png" alt="img" style="zoom:120%;" />
 
 **Bray Curtis Distance**
 
 Bray Curtis距离主要用于生态学和环境科学，计算坐标之间的距离。该距离取值在[0,1]之间。它也可以用来计算样本之间的差异。
 
 ![img](https://s2.loli.net/2022/03/27/5QtqCYnLT7deZVR.png)
+
+#### Principal Component Analysis (PCA)
+
+PCA is a way of linear transforming a set X of n-dimensional points X1,X2,...,Xm into another set Y of n-dimensional points Y1,Y2,...,Ym. The property of the set is that the largest part of its information content is stored in the first few coordinates (components) of points Yi , i = 1,...,m.
+
+
+
+
+
+
 
 
 
