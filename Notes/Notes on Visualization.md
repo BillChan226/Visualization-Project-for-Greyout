@@ -7,7 +7,7 @@ Seaborn装载了一些默认主题风格，通过sns.set()方法实现
 
 sns.set()可以设置5种风格的图表背景：darkgrid, whitegrid, dark, white, ticks，通过参数style设置，默认情况下为darkgrid风格：
 
-![img](https://pic4.zhimg.com/80/v2-02c5292556531b67326475c142874823_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/5zoQL49DKdtIhUm.jpg)
 
 Seaborn 调色板palette功能（作图色系）
 
@@ -24,7 +24,7 @@ relplot()是seaborn中非常重要的绘图函数，它可以用于绘制散点�
 
 添加多个控制行参数：
 
-![img](https://pic1.zhimg.com/80/v2-bd5bd1663e705ddc97b1ccf074111ae4_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/6tYdBCVehngz1Zb.jpg)
 
 lineplot() 和 scatter()也可以分别用于绘制线图和散点图
 
@@ -34,17 +34,17 @@ lmplot()函数用以绘制回归模型，描述线性关系
 
 可以使用传递参数ci调整置信区间的大小：
 
-![img](https://pic4.zhimg.com/80/v2-7a73e3ca53ec5ce1e87a92d93dc184bb_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/tRlXyC81waV6Fdm.jpg)
 
 也可以绘制非参数回归模型（局部加权线性回归），传递参数 lowess=True：
 
-![img](https://pic3.zhimg.com/80/v2-96ff7bea158e97b8599487990b3ed80e_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/o8tSms7z1YwAlin.jpg)
 
 ### **分类散点图 - stripplot()函数**
 
 当有一维数据是分类数据时，散点图成了条带形状，这里就用到stripplot()函数
 
-![img](https://pic3.zhimg.com/80/v2-a129a751b53399bad49b7a1754cb5b22_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/BbxTq4YiWRn1guv.jpg)
 
 stripplot()数与catplot类的子函数，也可通过更换父类catplot中的kind参数实现分类散点图。catplot还有子函数如下所示：
 
@@ -69,7 +69,7 @@ g = sns.FacetGrid(iris, col="Species")
 g = g.map(plt.hist, "SepalWidthCm", bins=20)
 ```
 
-![img](https://pic1.zhimg.com/80/v2-03d3febb3f09b7a91f829cd71cc5ec30_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/9e86TW7SCJ2HKcz.jpg)
 
 再画KDE图：
 
@@ -80,7 +80,7 @@ sns.FacetGrid(iris, hue="Species", size=6) \
    .add_legend()
 ```
 
-![img](https://pic3.zhimg.com/80/v2-4c467369e834e710c3e027b3fb68a052_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/buhcWAXPj9C3yeo.jpg)
 
 这里通过KDE可以看出，由于Setosa的KDE与其他两种没有交集，直接可以用Petailength线性区分Setosa与其他两个物种
 
@@ -98,7 +98,7 @@ Bubbly is a package for plotting interactive and animated *bubble charts* using 
 
 以Iris数据集为例：
 
-![img](https://pic3.zhimg.com/80/v2-80c4ad3ef86febe5c6c56fa8bae78402_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/kLiPMhnadOEpH3u.jpg)
 
 这个数据集有6列，6个特征，很多时候做可视化就是为了更好的了解数据，比如这里就是想看每个种类的花有什么特点，怎么样根据其他特征把花分为三类。**因此可以首先绘制一张图尽量多的包含数据点，展示数据信息，从中发现规律。**我们可以利用以下代码完全展示全部维度和数据这里用的bubbly：
 
@@ -122,7 +122,7 @@ figure = bubbleplot(dataset=iris, x_column='SepalLengthCm', y_column='PetalLengt
 iplot(figure, config={'scrollzoom': True})
 ```
 
-![img](https://pic2.zhimg.com/80/v2-62f430cacdd798b1ef704636a009d0cd_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/5Gh2LpoTNCnl6HO.jpg)
 
 
 
@@ -146,19 +146,19 @@ KDE是对直方图的一个自然拓展 采用非参数的方法估计一个分�
 
 一般估计概率密度会想到先求分布函数，再对其求导得到。一个最简单而有效的估计分布函数的方法是所谓的`经验分布函数`（empirical distribution function）：
 
-![img](https://pic1.zhimg.com/80/ff6e4761af2989d3798105cb6715955c_720w.jpg?source=1940ef5c)
+![img](https://s2.loli.net/2022/03/27/Q59qsurURtav2p1.png)
 
 即，F(t)的估计为所有小于t的样本的概率。可以证明，这个估计是almost surely收敛的，有很好的统计性质。如图所示：
 
-![img](https://pic1.zhimg.com/80/d16d85d88d22203abaa188dc67dce753_720w.jpg?source=1940ef5c)
+![img](https://s2.loli.net/2022/03/27/MicvYNU8lCZ9DEQ.jpg)
 
 可是这个EDF不是可导的，不够光滑，因而不能通过对该EDF直接求导算密度函数。因此可以近似逼近斜率的方法来求导数：
 
-![[公式]](https://www.zhihu.com/equation?tex=f%28x%29%3D%5Clim_%7Bh%5Crightarrow+0%7D+%5Cfrac%7BF%28x%2Bh%29-F%28x-h%29%7D%7B2h%7D)
+![[公式]](https://www.zhihu.com/equation?tex=f(x)%3D\lim_{h\rightarrow+0}+\frac{F(x%2Bh)-F(x-h)}{2h})
 
 把分布函数用上面的经验分布函数替代，那么上式分子上就是落在[x-h,x+h]区间的点的个数。我们可以把f(x)的估计写成：
 
-![[公式]](https://www.zhihu.com/equation?tex=%5Chat%7Bf%7D_h%28x%29%3D%5Cfrac%7B1%7D%7B2h%7D%5Cfrac%7B%5C%23x_i%5Cin%5Bx-h%2Cx%2Bh%5D%7D%7BN%7D%3D%5Cfrac%7B1%7D%7B2Nh%7D%5Csum_%7Bi%3D1%7D%5E%7BN%7D1%28x-h%5Cleq+x_i%5Cleq+x%2Bh%29%3D%5Cfrac%7B1%7D%7BNh%7D%5Csum_%7Bi%3D1%7D%5E%7BN%7D%5Cfrac%7B1%7D%7B2%7D%5Ccdot+1%28%5Cfrac%7B%7Cx-x_i%7C%7D%7Bh%7D%5Cleq+1%29)
+![[公式]](https://www.zhihu.com/equation?tex=\hat{f}_h(x)%3D\frac{1}{2h}\frac{\%23x_i\in[x-h%2Cx%2Bh]}{N}%3D\frac{1}{2Nh}\sum_{i%3D1}^{N}1(x-h\leq+x_i\leq+x%2Bh)%3D\frac{1}{Nh}\sum_{i%3D1}^{N}\frac{1}{2}\cdot+1(\frac{|x-x_i|}{h}\leq+1))
 
 h的选择：存在非参数估计里面的bias-variance tradeoff：如果h太大，用于计算的点很多，可以减小方差，但是方法本质要求h→0，bias可能会比较大；如果h太小，bais小了，但是用于计算的点太少，方差又很大。
 
@@ -172,13 +172,13 @@ h的选择：存在非参数估计里面的bias-variance tradeoff：如果h太�
 
 **理论推导：**
 
-观察上面的估计式子，如果记 ![[公式]](https://www.zhihu.com/equation?tex=K_0%28t%29%3D%5Cfrac%7B1%7D%7B2%7D%5Ccdot+1%28t%3C1%29)，那么估计式可以写为：
+观察上面的估计式子，如果记 ![[公式]](https://www.zhihu.com/equation?tex=K_0(t)%3D\frac{1}{2}\cdot+1(t<1))，那么估计式可以写为：
 
-![[公式]](https://www.zhihu.com/equation?tex=%5Chat%7Bf%7D_h%28x%29%3D%5Cfrac%7B1%7D%7Bnh%7D%5Csum_%7Bi%3D1%7D%5E%7BN%7DK_0%28%5Cfrac%7Bx-x_i%7D%7Bh%7D%29)
+![[公式]](https://www.zhihu.com/equation?tex=\hat{f}_h(x)%3D\frac{1}{nh}\sum_{i%3D1}^{N}K_0(\frac{x-x_i}{h}))
 
 密度函数的积分：
 
-![[公式]](https://www.zhihu.com/equation?tex=%5Cint+%5Chat%7Bf%28x%29%7D+dx%3D%5Cfrac%7B1%7D%7BNh%7D%5Csum_%7Bi%3D1%7D%5EN%5Cint+K_0%28%5Cfrac%7Bx-x_i%7D%7Bh%7D%29dx%3D%5Cfrac%7B1%7D%7BN%7D%5Csum_%7Bi%3D1%7D%5EN%5Cint+K_0%28t%29dt%3D%5Cint+K_0%28t%29dt)
+![[公式]](https://www.zhihu.com/equation?tex=\int+\hat{f(x)}+dx%3D\frac{1}{Nh}\sum_{i%3D1}^N\int+K_0(\frac{x-x_i}{h})dx%3D\frac{1}{N}\sum_{i%3D1}^N\int+K_0(t)dt%3D\int+K_0(t)dt)
 
 因而只要K的积分等于1，就能保证估计出来的密度函数积分等于1。
 
@@ -190,7 +190,7 @@ h的选择：存在非参数估计里面的bias-variance tradeoff：如果h太�
 
 将设有N个样本点，对这N个点进行上面的拟合过后，将这N个概率密度函数进行叠加便得到了整个样本集的概率密度函数。例如利用高斯核对X={x1=−2.1,x2=−1.3,x3=−0.4,x4=1.9,x5=5.1,x6=6.2} 六个点的“拟合”结果如下：
 
-![这里写图片描述](https://img-blog.csdn.net/20171116223625487?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdW5peHRjaA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![这里写图片描述](https://s2.loli.net/2022/03/27/P6v5jQUETMSyAJh.png)
 
 左边是直方图，bin的大小为2，右边是核密度估计的结果。
 可见将以每个点为均值的高斯函数叠加在一起就得到了总概率密度函数
@@ -202,23 +202,23 @@ h越小高斯函数越陡峭，h越大越平滑。当h为无穷大时退化为y=
 在核函数确定之后，比如上面选择的高斯核，那么高斯核的方差，也就是h（也叫带宽，也叫窗口，我们这里说的邻域）应该选择多大呢？不同的带宽会导致最后的拟合结果差别很大。同时上面也提到过，理论上h->0的，但h太小，邻域中参与拟合的点就会过少。那么借助机器学习的理论，我们当然可以使用交叉验证选择最好的h。另外，也有一个理论的推导给你选择h提供一些信息。
 在样本集给定的情况下，我们只能对样本点的概率密度进行计算，那拟合过后的概率密度应该核计算的值更加接近才好，基于这一点，我们定义一个误差函数，然后最小化该误差函数便能为h的选择提供一个大致的方向。选择均平方积分误差函数(mean intergrated squared error)，该函数的定义是：
 
-![image-20220322191240526](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191240526.png)
+![image-20220322191240526](https://s2.loli.net/2022/03/27/BP8Yr1RO9e3AGIH.png)
 
 在weak assumptions下， ，其中AMISE为渐进的MISE(这里我没搞懂是怎么推导出来的)。而AMISE有：
 
-![image-20220322191323754](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191323754.png)
+![image-20220322191323754](https://s2.loli.net/2022/03/27/jLtNCHY1XPSKsyi.png)
 
 其中：
 
-![image-20220322191342905](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191342905.png)
+![image-20220322191342905](https://s2.loli.net/2022/03/27/hFgdo5TjBflYn6p.png)
 
 最小化MISE(h)等价于最小化AMISE(h)，求导，令导数为0有：
 
-![image-20220322191402969](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191402969.png)
+![image-20220322191402969](https://s2.loli.net/2022/03/27/q7XWL1y9NVZMlwh.png)
 
 得：
 
-![image-20220322191423641](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220322191423641.png)
+![image-20220322191423641](https://s2.loli.net/2022/03/27/qQBZ6huWv7YSrCx.png)
 
 当核函数确定之后，h公式里的R、m、f” 都可以确定下来，h便存在解析解。如果带宽不是固定的，其变化取决于估计的位置（balloon estimator）或样本点（逐点估计pointwise estimator)，由此可以产生一个非常强大的方法称为自适应或可变带宽核密度估计。
 
@@ -231,7 +231,7 @@ h越小高斯函数越陡峭，h越大越平滑。当h为无穷大时退化为y=
 sns.pairplot(iris.drop("Id", axis=1), hue="Species", size=3, diag_kind="kde")
 ```
 
-![img](https://pic2.zhimg.com/80/v2-513a1370696fbc8f363b25b697b47475_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/3LSu1jJnQwiv75B.jpg)
 
 ##### 小提琴图
 
@@ -240,7 +240,7 @@ sns.pairplot(iris.drop("Id", axis=1), hue="Species", size=3, diag_kind="kde")
 sns.violinplot(x="Species", y="PetalLengthCm", data=iris, size=6)
 ```
 
-![img](https://pic1.zhimg.com/80/v2-b1285d2d53cb97aa209e2a1271625c08_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/nDvfWY4GXghQKy8.jpg)
 
 #### Visualizing Data Structure
 
@@ -265,7 +265,7 @@ from pandas.tools.plotting import andrews_curves
 andrews_curves(iris.drop("Id", axis=1), "Species")
 ```
 
-![img](https://pic1.zhimg.com/80/v2-097f1649376b1790859761a535e4bd20_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/iycJBUbpIDV7WRA.jpg)
 
 Andrew Curves将高维数据通过傅里叶级数的方式呈现到二维平面上，可以较为heuristically地呈现大量数据在高维空间的分布情况。个人理解是信号的某一频率如果幅值较大，则该信号会呈现出明显的周期。可是假如调换多维数据中任意两个维度的位置，把特征比较明显的维度分配给频率较小的正弦波，现象还是否明显呢？
 
@@ -281,7 +281,7 @@ from pandas.tools.plotting import parallel_coordinates
 parallel_coordinates(iris.drop("Id", axis=1), "Species")
 ```
 
-![img](https://pic2.zhimg.com/80/v2-0048308947369963c19e5fb07d4712d1_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/lOF4x61craRZyJ9.jpg)
 
 可以较容易地看出哪些特征最能够区分不同种类的数据，如上图的PetalLength和PetalWidth。However，这个方法的缺点是可视化较高维数据的时候coordinates are too dense，想要perceive数据结构比较困难。同样，当数据量较大的时候，interpretation of the results is also very complicated.
 
@@ -293,7 +293,7 @@ HPC是Parallel Coordinates的Variation之一。When visualizing a large data set
 
 + Afterwards, the data are represented on the parallel coordinates, the centers of clusters are highlighted; the color intensity of the members of clusters depends on how far they are from the cluster center; different clusters are displayed by
 
-![HPC](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\HPC.png)
+![HPC](https://s2.loli.net/2022/03/27/I9zHuFGK3OQnE2y.png)
 
 ##### Radviz
 
@@ -307,7 +307,7 @@ from pandas.tools.plotting import radviz
 radviz(iris.drop("Id", axis=1), "Species")
 ```
 
-![img](https://pic4.zhimg.com/80/v2-6df194e1208dae4875bf5b3c69dfad97_720w.jpg)
+![img](https://s2.loli.net/2022/03/27/OD2JBh13ctrijen.jpg)
 
 Modification：PolyViz 和 GridViz
 
@@ -379,7 +379,7 @@ Hierarchical displays create a structure of an image such that some features are
 
 Trellis Display方法与Dimensional Stacking类似，也是通过选取一定的维度将整张图先划分成若干个小块，再利用这些小块呈现剩余特征的分布。与Dimensional Stacking方法不同的是，Trellis Display方法使用散点图刻画最内层的两个特征的分布。因此Outer features可以尽可能选择取值集合变量较少的离散变量，将取值集合较大的特征留在内层呈现。两个方法可以灵活利用subrange的划分方式（遍历特征离散值、划分连续区间等）来混合使用。
 
-![Trellis Display](F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\Notes\Images\Trellis Display.png)
+![Trellis Display.png](https://s2.loli.net/2022/03/27/RSpL6xWlqFZtVOK.png)
 
 
 
@@ -389,7 +389,7 @@ Trellis Display方法与Dimensional Stacking类似，也是通过选取一定的
 
 **rotation**
 
-![image-20220327095408167](C:\Users\Bill Chan\AppData\Roaming\Typora\typora-user-images\image-20220327095408167.png)
+![image-20220327095408167.png](https://s2.loli.net/2022/03/27/JhrmeHsKNkZTPdQ.png)
 
 降维线性变换：变换矩阵A为n行d列，且d<n
 
