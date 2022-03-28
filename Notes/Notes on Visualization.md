@@ -604,11 +604,56 @@ The reason for using E(Y) rather than the normalized error σn(Y) is that σn(Y)
 
 ###### SMACOF Algorithm
 
+[sklearn.manifold.smacof-scikit-learn中文社区](https://scikit-learn.org.cn/view/465.html)
 
+[2.降维 - 二、MDS - 《AI算法工程师手册》 - 书栈网 · BookStack](https://www.bookstack.cn/read/huaxiaozhuan-ai/spilt.2.78262ebb86c63967.md)
 
+The multidimensional scaling Stress function(应力方程) can be minimized in the majorization way. The idea of majorization is to replace iteratively the original complicated function f(x) by an auxiliary function g(x,z), where z is some fixed value.
 
+Stress function(objective function to be minimized):
 
+![image-20220328144626772](https://s2.loli.net/2022/03/28/OwqYN6Us8VTWi3m.png)
 
+The set Y = {Y1,Y2,...,Ym} of d-dimensional points may be iteratively calculated by the so-called **Guttman transform formula**(古特曼变换):
+
+![image-20220328164940185](https://s2.loli.net/2022/03/28/QNvDBisw8L4pCc9.png)
+
+where t is the order number of iteration(迭代次数), B(Y(t)) has the elements
+
+![image-20220328164254984](https://s2.loli.net/2022/03/28/zVUsGZxWnvM5SK8.png)
+
+**V** is a matrix of weights with the entries:
+
+![image-20220328164321578](https://s2.loli.net/2022/03/28/PBjsG3dQy2KTmSx.png)
+
+V+是V的Moore-Penrose伪逆，因此Guttman transform formula被简化成：
+
+![image-20220328164527766](https://s2.loli.net/2022/03/28/jt4JekrQlWTLG7I.png)
+
+因此降维算法的SMACOF算法流程：
+
++ 随机化设置初始启动配置，迭代次数t重置为0
++ 计算变量为Y(t)时的应力σ(Y(t))
++ 根据古特曼变换，计算Y(t+1)
++ 迭代以上两步，直到σ(Y(tn-1)) - σ(Y(tn)) < ε 或 达到最大迭代次数时停止
+
+sklearn中的api:
+
+```python
+sklearn.manifold.smacof(dissimilarities, *, metric=True, n_components=2, init=None, n_init=8,n_jobs=None, max_iter=300, verbose=0, eps=0.001, random_state=None, return_n_iter=False)
+```
+
+**Diagonal Majorization Algorithm (DMA)**
+
+SMACOF是利用Majorization的方法解目标凸优化函数σ(Y(t))的一种迭代方法（梯度更新是另一种）。SMACOF指定Projection error σ(Y(t))必须定义成如下形式：
+
+![image-20220328144626772](https://s2.loli.net/2022/03/28/OwqYN6Us8VTWi3m.png)
+
+而DMA方法通过定义一个更差的projection error来得到更快的收敛速度，其majorization function为：
+
+![image-20220328170154559](https://s2.loli.net/2022/03/28/Vr6KU2EROBZDqxS.png)
+
+###### Relative Mapping
 
 
 
