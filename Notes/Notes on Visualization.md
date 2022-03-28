@@ -502,6 +502,114 @@ Steps：
 
 综上所述：协方差矩阵的特征值就是当数据点以其对应的特征向量为投影面时投影得到的点的方差。故PCA选取最大的几个特征值对应的特征向量构成变换矩阵即可。
 
+![image-20220328125053953](https://s2.loli.net/2022/03/28/51GA9etVEg43FJX.png)
+
+由于协方差矩阵是对称且非负定的，因此找到其最大的特征值比较容易。也有一些神经网络的手段被用于找主成分。
+
+PCA的缺点：It is not good for data of **nonlinear structures**, consisting of arbitrarily shaped clusters or curved manifolds.
+
+解决方案：Principal curves/surfaces
+
+#### Linear Discriminant Analysis
+
+与PCA不同的是，LDA是一种有监督学习方式（利用数据点所属的类别信息作为监督标签）。LDA transforms multidimensional data to a low-dimensional space, maximizing the linear separability between objects belonging to different classes.
+
+[线性判别分析LDA原理总结 - 刘建平Pinard - 博客园 (cnblogs.com)](https://www.cnblogs.com/pinard/p/6244265.html)
+
+类似于PCA，也是先构造一个待优化的表达式：
+
+LDA的思想可以用一句话概括，就是“**投影后类内方差最小，类间方差最大**”。即要将数据在低维度上进行投影，投影后希望每一种类别数据的投影点尽可能的接近，而不同类别的数据的类别中心之间的距离尽可能的大。
+
+LDA需要让不同类别的数据的类别中心之间的距离尽可能的大，即定义不同类别的数据的类别中心到整体中心的距离之和为Sb：
+
+![LDA_Sb](https://s2.loli.net/2022/03/28/XvqTHLjtmdQeygZ.png)
+
+其中μ为所有样本均值向量
+
+再定义每个类之内的方差之和：
+
+![LDA_Sw](https://s2.loli.net/2022/03/28/SwyAhJFZLBVYij3.png)
+
+得到待优化目标为：
+
+![LDA_Jw](https://s2.loli.net/2022/03/28/S2vxlsq53YjywIX.png)
+
+根据广义瑞利商，上式的最大值是矩阵S−1wSb的最大特征值,最大的d个值的乘积就是矩阵S−1wSb的最大的d个特征值的乘积,此时对应的矩阵**W**为这最大的d个特征值对应的特征向量张成的矩阵。即目标投影面就是矩阵
+
+![image-20220328141141841](https://s2.loli.net/2022/03/28/45bJKFh28Tfa6Qc.png)
+
+的前d个最大特征值对应的特征向量构成的n*d矩阵。
+
+由于**W**是一个利用了样本的类别得到的投影矩阵，因此它的降维到的维度d最大值为k-1，即d<k。为什么最大维度不是类别数k呢？因为Sb中每个μj−μ的秩为1，因此协方差矩阵相加后最大的秩为k（矩阵的秩小于等于各个相加矩阵的秩的和），但是由于如果我们知道前k-1个μj后，最后一个μk可以由前k-1个μj线性表示，因此Sb的秩最大为k-1，即特征向量最多有k-1个。
+
+LDA算法流程：
+
++ 计算类内散度矩阵Sw
++ 计算类间散度矩阵Sb
++ 计算矩阵S−1wSb
++ 计算S−1wSb最大的d个特征值和对应的d个特征向量(w1,w2,...wd)，得到投影矩阵W
++ 对样本集中的每一个样本特征xi，转化为新的样本zi=WTxi
++ 得到输出样本集D′={(z1,y1),(z2,y2),...,((zm,ym))}
+
+实际上LDA除了可以用于降维以外，还可以用于分类。一个常见的LDA分类基本思想是假设各个类别的样本数据符合高斯分布，这样利用LDA进行投影后，可以利用极大似然估计计算各个类别投影数据的均值和方差，进而得到该类别高斯分布的概率密度函数。当一个新的样本到来后，我们可以将它投影，然后将投影后的样本特征分别带入各个类别的高斯分布概率密度函数，计算它属于这个类别的概率，最大的概率对应的类别即为预测类别。
+
+##### LDA vs PCA
+
+LDA用于降维，和PCA有很多相同，也有很多不同的地方：
+
+**相同点：**
+
++ 两者均可以对数据进行降维
++ 两者在降维时均使用了矩阵特征分解的思想
++ 两者都假设数据符合高斯分布
+
+**不同点：**
+
++ LDA是有监督的降维方法，而PCA是无监督的降维方法
++ LDA降维最多降到类别数k-1的维数，而PCA没有这个限制
++ LDA除了可以用于降维，还可以用于分类
++ LDA选择分类性能最好的投影方向，而PCA选择样本点投影具有最大方差的方向
+
+当样本分类信息依赖均值而不是方差的时候，LDA较优：
+
+<img src="https://s2.loli.net/2022/03/28/rAnUlYGQy3x8oja.jpg" alt="img" style="zoom:65%;" />
+
+当样本分类信息依赖方差而不是均值的时候，PCA较优：
+
+![img](https://s2.loli.net/2022/03/28/TrfZLudKvMHAetz.png)
+
+#### Multidimensional Scaling
+
+The goal of multidimensional scaling is to find low-dimensional points Yi = (yi1, yi2,..., yid), such that the distances between the points in the low-dimensional space were as close to the proximities as possible.
+
+**The least-squares objective:**
+
+![image-20220328144626772](https://s2.loli.net/2022/03/28/OwqYN6Us8VTWi3m.png)
+
+wij are non-negative weights
+
+**Normalized:**
+
+![image-20220328145038983](https://s2.loli.net/2022/03/28/Hwadb19oL5kGyc3.png)
+
+**Relative error:**
+
+![image-20220328144807536](https://s2.loli.net/2022/03/28/kDVEdyU6KZpo8vM.png)
+
+The reason for using E(Y) rather than the normalized error σn(Y) is that σn(Y) is almost always very small in practice, so E(Y) values are easier to discriminate.
+
+实际上，存在多种MDS的优化目标函数（多种权值）和对应的优化方法。
+
+##### Local Optimization Strategy
+
+###### SMACOF Algorithm
+
+
+
+
+
+
+
 
 
 
