@@ -510,7 +510,7 @@ PCA的缺点：It is not good for data of **nonlinear structures**, consisting o
 
 解决方案：Principal curves/surfaces
 
-#### Linear Discriminant Analysis
+#### Linear Discriminant Analysis (LDA)
 
 与PCA不同的是，LDA是一种有监督学习方式（利用数据点所属的类别信息作为监督标签）。LDA transforms multidimensional data to a low-dimensional space, maximizing the linear separability between objects belonging to different classes.
 
@@ -655,6 +655,257 @@ SMACOF是利用Majorization的方法解目标凸优化函数σ(Y(t))的一种迭
 
 ###### Relative Mapping
 
+Relative mapping是一种通过将计算任务（映射后的各objects坐标）分解来加速计算的方法。猜测SMACOF方法的时间复杂度和待求的Y矩阵的object的数量正相关？（迭代次数随object的数量的增加而增加？）因此Relative mapping的idea是先选择一小部分的objects用MDS的通用方法（SMACOF, DMA等）进行映射（mapping），再通过优化下式来保证映射尚未映射的objects的同时已映射的objects被保留下来：
+
+![image-20220328203222933](https://s2.loli.net/2022/03/28/bux5U1QKI24Gtvk.png)
+
+m hat是已经映射过的objects的数量，Yj hat是被映射过的objects在新空间的坐标。可以看出，这个新的projection error表达式仅需要优化（m - m hat）* d 个变量。
+
+Relative mapping对于large data sets比较适用。对于Relative mapping而言，恰当的选择刚开始的小部分objects（basic objects）很重要。The basic objects should be selected so that they were distributed as uniformly as possible all over the data set, which yields better results of the obtained visualization. 
+
+对于高维数据，可以用K-means的方法来选择basic objects。
+
+###### Sammon's mapping
+
+通过令general projection error function中的权值wij取下式：
+
+![image-20220328211420045](https://s2.loli.net/2022/03/28/1MXD6SdCgZt2fxV.png)
+
+可以得到projection error的new form：
+
+![image-20220328211508981](https://s2.loli.net/2022/03/28/9RtmQMerUPnjNCD.png)
+
+Due to the normalization (division by δij), the preservation of small values of proximities is emphasized. 之前的表达式在优化时对于dissimilarity scale本身就较大的两个objects可能效果更明显，而没有强调dissimilarity较小的两个objects的映射。
+
+为了优化上式Es(Y)，Sammon采用了梯度下降的策略：
+
+![image-20220329114621823](https://s2.loli.net/2022/03/29/DFSRKtmbN3Jch8I.png)
+
+where t denotes the order number of iteration, η is an optimization step parameter.
+
+![image-20220329114723582](https://s2.loli.net/2022/03/29/ndrcCJfs6mPN7Mw.png)
+
+由于Es(Y)不一定是一个凸函数，因此其的最终收敛值依赖于步长η和初始值Y(0)的选择。
+
+可以用Gauss-Seidel迭代法来迭代计算y(t)。
+
+![image-20220329120438538](https://s2.loli.net/2022/03/29/5OxvesL3FKANYHB.png)在Jacob迭代法中（最直观的方式），每个yik(t+1)的计算依赖于上一次迭代得到的各yik(t)，因此计算机在计算该公式时需要两组存储单元，来存储yik(t)和yik(t+1)。而Gauss-Seidel迭代法在一次迭代中分别按顺序计算一组数据 i=1,2,...,n 时，假设已经计算到第j行数据了（即已经得到y(j-1)k(t+1)，待计算yik(t+1), i>j)，此时直接利用y(j-1)k(t+1)来替换计算yjk(t+1)所需要的y(j-1)kt。即Gauss-Seidel迭代法仅需要一组存储单元，每次计算出新的yjk(t+1)就可以替换掉本来的yjk(t)。
+
+关于Jacob迭代法和Gauss-Seidel迭代法：
+
+[雅可比迭代和高斯赛德尔迭代 - 加拿大小哥哥 - 博客园 (cnblogs.com)](https://www.cnblogs.com/hxsyl/p/4193868.html)
+
+![image](https://s2.loli.net/2022/03/29/UIVm4jueAyrczgJ.png)
+
+![image](https://s2.loli.net/2022/03/29/2fgdo1CpySj3iuX.png)
+
+![image](https://s2.loli.net/2022/03/29/ibGZI7LWMeFOqE6.png)
+
+![image](https://s2.loli.net/2022/03/29/SNMYWK1fhJceT4V.png)
+
+![image](https://s2.loli.net/2022/03/29/tqDnvobeGJL9ds7.png)
+
+![image](https://s2.loli.net/2022/03/29/juT1qxhyr8mn4vM.png)
+
+![img](https://s2.loli.net/2022/03/29/hHLobdKzZf5QDas.png)
+
+#### Manifold-Based Visualization
+
+[流形学习概述 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/40214106)
+
+Most of real-life data are **multidimensional**, but they are not truly **high-dimensional** (not as high as the vector space). Multidimensional points just lie on a low-dimensional **manifold** embedded into a high-dimensional space. 流形是高维空间中的几何图形（空间）的统称，每一个点的邻近空间都可以被近似成一个欧式空间。
+
+非线性流形学习方法是topology preserving方法，即保持点与点之间在领域的几何关系（欧式空间）。如果在流形空间中位于领域的两点之间距离较近，则将其展开到低维空间以后两点也应该距离较近。
+
+对于所有的流行学习方法而言，都包括以下几步：
+
++ 衡量样本点的邻居点（认为分布于欧式空间，可以线性近似），构建邻域图
++ 衡量邻居点之间的关系（欧式距离、线性表示等）
++ 根据第二步建立的邻域集关系构造优化问题并求解
+
+实际上，大部分的方法对于上述第一步的操作都是类似的。主要有两种方式来判断一个点i的邻居点：
+
+1. 预先设定一个距离阈值，分别遍历每个点到点i的欧式距离是否小于这个距离阈值，并加入邻域集合（阈值的给出缺乏先验知识有时难以确定）
+2. 先算出全体数据点集合N中各点相互之间的欧式距离，再用K近邻法筛选每个点i的K个邻居结点（K的选择）
+
+##### Isometric Feature Mapping (ISOMAP)
+
+ISOMAP is a **global** approach that attempts to preserve geometry at all scales: nearby multidimensional points are projected to nearby points in a low-dimensional space, and faraway multidimensional points to faraway low-dimensional points.
+
+ISOMAP方法计算了N中每个点之间的距离：对于相邻样本点直接采用欧式距离近似；对于不相邻的样本点，采用测地线距离（通常采用Dijkstra算法得出连通图各点之间的最小路径）。将这些距离存储到距离矩阵DG中。
+
+![image-20220330171305018](https://s2.loli.net/2022/03/30/D8Xrputah3TfOYb.png)
+
+如上图所示，a是欧式距离，b是测地线距离。
+
+模仿MDS方法，构造内在d维子空间，最小化下式：
+
+![image-20220330171435661](https://s2.loli.net/2022/03/30/zehQTyD7OSvKs8N.png)
+
+之后再采用MDS章节介绍的几种方法来求解这个优化问题即可。
+
+
+
+##### Locally Linear Embedding (LLE)
+
+LLE假设有足够多数据点，且每个数据点和它的邻居点分布在同一个局部线性区域。因此，一个数据点的坐标可以用它的邻居结点的线性组合来（最小二乘意义下）近似。LLE方法即是把这种线性拟合的系数当成这个流形的局部几何性质的描述（ISOMAP方法是用邻居结点之间的欧式距离来吗描述流体的局部几何性质）。The basic idea of LLE is that such a linear combination is invariant under linear transformations (translation, rotation, and scaling) and, therefore, it should remain unchanged after the manifold has been unfolded to a low-dimensional space.
+
+算法步骤：
+
++ 构建邻域图（通常用K近邻法，因为一个k维的流体（局部欧式空间为k维）可以用k+1个线性不相关向量的线性组合表示）
+
++ 计算权重。由局部线性假设，样本点xi可用其K 个邻域点 xj 线性表示，即 xi≈∑Wi,jxj，用权重描述出每一样本点与其邻域点之间的关系，权重 Wi,j是使得样本点xi用其K个邻域点 xj重构误差最小的解的系数：
+
+  ![image-20220330200249652](https://s2.loli.net/2022/03/30/TCWOrbonVLyz8Ui.png)
+
++ 将这种局部线性结构嵌入低维空间。嵌入操作是通过最小化误差来尽可能多的保留原空间的性质：
+
+  ![image-20220330200436925](https://s2.loli.net/2022/03/30/LBIefAbdHmQJho9.png)
+
+  subject to:
+
+  ![image-20220330200508075](https://s2.loli.net/2022/03/30/QpS9OFJ6mgoADRh.png)
+
+  这里的 Wi,j是第二步计算的权重值，yi与 yj是样本点在嵌入空间的投影。
+
+  求解目标d维Y矩阵的最直接方法是找出如下稀疏矩阵的最小的d+1个特征值对应的特征向量：
+
+  ![image-20220330201041698](https://s2.loli.net/2022/03/30/WibLqkx16YAPCvO.png)
+
+  最小的特征值接近0，该特征向量 is the unit vector with all equal components and it is discarded. 剩余的d个特征向量则构成的嵌入局部线性关系后的d维矩阵Y。
+
+Isomap 与LLE的比较：
+
++ Isomap与LLE从不同的角度出发来实现同一个目标，它们都能从某种程度上发现并在映射的过程中保持流形的几何特征；
++ Isomap希望保持任意两点间的测地线距离；LLE希望保持局部线性关系；
++ 从保持几何角度来看，Isomap保留了更多信息，然而Isomap方法的一个问题是要考虑任意两点之间的关系，这个数量随着数据点的增多而呈现爆炸性增长，从而增加计算负荷，在大数据时代，使用全局方法分析巨型数据结构正在变得越来越困难；
++ 因此，以LLE为开端的局部分析方法的变种和相关理论正在受到越来越多的关注；
+
+LLE可以将距离的衡量方式改为kernel distance（之前是euclidean distance）来在kernel feature space寻找邻居点，从而获得一些generalization (KLLE) 。
+
+LLE的重点在于如何选取邻居结点数量K。K值若太小（下图k=5的情况），则本来的连续流形可能会被错误地划分为一些无法连接的子流形（disjoint sub-manifolds），从而无法充分展现global properties（对流形的维度预估过小，数据点难以用K个点的坐标线性表示）；K值若太大（下图K=100的情况），此时数据如果比较稀疏，则流形中本来存在的一些small-scale structure就可能被smooth or eliminate（退化成PCA和MDS）。K的值因具体情况而不同，通常取决于sampling density和manifold geometry。
+
+![image-20220330202820521](https://s2.loli.net/2022/03/30/DCvi3TpjJ1PmSdU.png)
+
+LLE的一个应用场景是动态物体image analysis。For example, shown below is a set of uncolored pictures, obtained by gradually (by 5◦ ) rotating a duckling around. The number of pictures is m = 72. The pictures consist of 128×128 gray-scale pixels, therefore the dimensionality of data is n = 16384. **Intuitively, one would expect multidimensional data that represent these pictures, to lie on a manifold parameterized by a rotation angle.**
+
+![image-20220330203235811](https://s2.loli.net/2022/03/30/eMXGVKukOUl9Lsx.png)
+
+##### Laplacian Eigenmaps (LE)
+
+和前面两种方式类似，LE希望保持流形中的近邻关系：将原始空间中相近的点映射成目标空间中相近的点。
+
+令样本集 X=(x1,x2...xn)，投影后的样本集为 Y=(y1,y2...yn)
+
+LE的目标是最小化目标函数：
+
+![img](https://s2.loli.net/2022/03/30/bStuIv1f74Tcowj.png)
+
+Wij表示的是原始空间中结点i和j之间的距离权重系数组成的矩阵。若i和j是近邻关系，则
+
+![img](https://s2.loli.net/2022/03/30/UYdrgbcyWGiAsIt.png)
+
+否则Wij等于0。
+
+**物理意义：**
+
+如果ij是近邻关系（现在假设的是降维后的空间和原始空间一样都是满足近邻关系，这里只考虑近邻关系，不考虑全局的信息），比如原始空间中i和j是比较接近的,也就是dist(xij)比较小（如果ij不是k近邻的关系，那么Wij等于零，就不需要进行计算了），那么Wij（是dist(xij)的减函数）就比较大，那么为了满足min，降维后的dist(yij)就应该满足比较小的设定。相反，如果原始空间中i和j是比较远的(也就是dist(xij)比较大)，那么Wij就比较小了，此时允许dist(yij)相对Wji较大的情况不必被映射得很近。
+
+此后根据下式推导：
+
+![img](https://s2.loli.net/2022/03/30/N6eDojyvETQcMFX.png)
+
+构造出一个拉普拉斯矩阵L= D - W，得到目标函数：
+
+![image-20220330204301214](https://s2.loli.net/2022/03/30/eEmQg4FBcniUTRG.png)
+
+转换成一个求广义特征向量问题：
+
+![image-20220330204415373](https://s2.loli.net/2022/03/30/d7vISloJb1QutW5.png)
+
+从而解得使得目标函数最小得映射后d维矩阵Y。
+
+**关于图拉普拉斯矩阵：**
+
+[谱聚类方法推导和对拉普拉斯矩阵的理解 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/81502804)
+
+[散度、旋度与拉普拉斯算子 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/53794607)
+
+拉普拉斯算子（Laplace Operator）是 ![[公式]](https://www.zhihu.com/equation?tex=n) 维欧几里得空间中的一个二阶微分算子，定义为梯度（ ![[公式]](https://www.zhihu.com/equation?tex=\nabla+f) ）的散度（ ![[公式]](https://www.zhihu.com/equation?tex=%5Cnabla++%5Ccdot) )。
+
+笛卡尔坐标系下的表示法（以三维为例）：
+
+![image-20220330204727579](https://s2.loli.net/2022/03/30/8vABbjHwuPgXixo.png)
+
+可以将拉普拉斯算子转化为离散形式（以二维为例）：
+
+![image-20220330204841255](https://s2.loli.net/2022/03/30/clnykZhxg1mTzIo.png)
+
+其矩阵表示形式为：
+
+![[公式]](https://www.zhihu.com/equation?tex=\left(+{\matrix{++++0+%26+1+%26+0++\cr+++++1+%26+{+-+4}+%26+1++\cr+++++0+%26+1+%26+0++\cr++++}+}+\right))
+
+**实际上，拉普拉斯算子计算得到的是对矩阵中某一点进行微小扰动后获得的总增益**
+
+将这个结论推广到图后得到图拉普拉斯矩阵。
+
+假设具有 ![[公式]](https://www.zhihu.com/equation?tex=N) 个节点的图 ![[公式]](https://www.zhihu.com/equation?tex=G) ，此时图中每个节点的自由度至多为 ![[公式]](https://www.zhihu.com/equation?tex=N) ，此时该图为完全图，即任意两个节点之间都有一条边连接，则对其中一个节点进行微扰，它可能变为图中任意一个节点。
+
+此时f可以看作自变量部分相连（结点之间权重为0则不相连）的离散函数，自变量的取值对应图中的各个结点。对 ![[公式]](https://www.zhihu.com/equation?tex=i) 节点进行扰动，它可能变为任意一个与它相邻的节点 ![[公式]](https://www.zhihu.com/equation?tex=j+\in+N_i) , ![[公式]](https://www.zhihu.com/equation?tex=N_i) 表示节点 ![[公式]](https://www.zhihu.com/equation?tex=i) 的一阶邻域节点。则将拉普拉斯算子应用到结点i得到：
+
+![[公式]](https://www.zhihu.com/equation?tex=\Delta+{f_i}+%3D+\sum\limits_{j+\in+{N}}+{{w_{ij}}({f_i}+-+}+{f_j}))
+
+继续推导有：
+![[公式]](https://www.zhihu.com/equation?tex=+\begin{array}{l}+\Delta+{f_i}+%3D+\sum\limits_{j+\in+N}+{{w_{ij}}({f_i}+-+{f_j})}+\++\\%3D+\sum\limits_{j+\in+N}+{{w_{ij}}{f_i}+-+\sum\limits_{j+\in+N}+{{w_{ij}}{f_j}}+}+\++\\%3D+{d_i}{f_i}+-+{W_{i%3A}}f+\end{array}+)
+对于所有的 ![[公式]](https://www.zhihu.com/equation?tex=N) 个节点有：
+
+![[公式]](https://www.zhihu.com/equation?tex=\eqalign{+++%26+\Delta+{f}+%3D+\left(+{\matrix{++++{\Delta+{f_1}}++\cr++++++\vdots+++\cr+++++{\Delta+{f_N}}++\cr++++}+}+\right)+%3D+\left(+{\matrix{++++{{d_1}{f_1}+-+{W_{1%3A}}f}++\cr++++++\vdots+++\cr+++++{{d_N}{f_N}+-+{W_{N%3A}}f}++\cr++++}+}+\right)++\cr++++%26++%3D++\left(+{\matrix{++++{{d_1}}+%26++\cdots++%26+0++\cr++++++\vdots++%26++\ddots++%26++\vdots+++\cr+++++0+%26++\cdots++%26+{{d_N}}++\cr++++}+}+\right)f++-+\left(+{\matrix{++++{{W_{1%3A}}}++\cr++++++\vdots+++\cr+++++{{W_{N%3A}}}++\cr++++}+}+\right)f+\cr+++++%26++%3D+diag({d_i})f+-+Wf++\cr++++%26++%3D+(D-W)f++\cr++++%26++%3D+Lf+\cr}+)
+
+这里的![[公式]](https://www.zhihu.com/equation?tex=(D-W)) 实际上就是的拉普拉斯矩阵 ![[公式]](https://www.zhihu.com/equation?tex=L)
+根据前面所述，拉普拉斯矩阵中的第 ![[公式]](https://www.zhihu.com/equation?tex=i) 行实际上反应了第 ![[公式]](https://www.zhihu.com/equation?tex=i) 个节点在对其他所有节点产生扰动时所产生的增益累积。直观上来讲，图拉普拉斯反映了当我们在节点 ![[公式]](https://www.zhihu.com/equation?tex=i) 上施加一个势，这个势以**哪个**方向能够多**顺畅**地流向其他节点。谱聚类中的拉普拉斯矩阵可以理解为是对图的一种矩阵表示形式。
+
+因此，从拉普拉斯矩阵的角度来理解LE，即最小化对各结点产生扰动时它们邻居结点的增益累计的和。
+
+##### Locality Preserving Projection (LPP)
+
+[局部保留投影算法(LPP)（Locality Preserving Projections）详解_AlanDreamer的博客-CSDN博客_lpp算法](https://blog.csdn.net/qq_39187538/article/details/90402961)
+
+LPP就是在LE方法中，通过Y=X*A来线性近似。在LE方法中，是通过求解广义特征向量问题：
+
+![image-20220330204415373](https://s2.loli.net/2022/03/30/d7vISloJb1QutW5.png)
+
+来直接解得非线性映射后的d维矩阵Y。但是这个方法的缺点是其只能映射原本的训练数据点，不能评估（映射）新的测试数据。而由于LPP方法解得的是一个线性变换矩阵A，因此可以很容易地将新的测试数据点投影映射在低维空间中。
+
+LPP方法在求解目标函数：
+
+![image-20220330204301214](https://s2.loli.net/2022/03/30/eEmQg4FBcniUTRG.png)
+
+时，令 Y=X*A （ *代表转置 ），将优化问题转化成：
+
+![img](https://s2.loli.net/2022/03/30/r1kIVb4Bi5aoGY2.png)
+
+最后转化成求解下面广义特征向量问题：
+
+![image-20220330211843281](https://s2.loli.net/2022/03/30/Oli5ET8WBca2IPk.png)
+
+由于不一定总是存在一个变换矩阵A，使得Y=X*A成立，因此LPP仅仅是LE方法的一个线性近似。但也正由于线性变换的引入，使得LPP方法更容易应用在实际问题中。
+
+##### Conclusion
+
+可以看出，以上四种方法其实都大同小异。第一步都是利用流形的局部线性性质先求得每个结点的邻居结点，再用不同的方式描述这种局部线性关系。这四种方法都是希望在映射之后也能保留原来的这种局部线性关系，从而各自设计了自己的目标优化函数。
+
+ISOMAP希望整个数据集的各结点之间的距离（邻居结点之间为欧式距离，非邻居结点为测地线距离）在映射前后相似：
+
+![image-20220330171435661](https://s2.loli.net/2022/03/30/zehQTyD7OSvKs8N.png)
+
+LE和LPP仅希望保持邻居结点之间距离的比例（用权值来刻画映射前空间邻居结点的距离关系）：
+
+![img](https://s2.loli.net/2022/03/30/bStuIv1f74Tcowj.png)
+
+LLE则希望保持映射前后邻域结点之间的线性组合关系：
+
+![image-20220330200436925](https://s2.loli.net/2022/03/30/sQv2yRteDwTkOLp.png)
+
 
 
 
@@ -664,3 +915,5 @@ SMACOF是利用Majorization的方法解目标凸优化函数σ(Y(t))的一种迭
 数据项目分析实例：[开发者自述：我是如何从 0 到 1 走进 Kaggle 的 (sohu.com)](https://www.sohu.com/a/143064983_114877)
 
 可视化产品：[SandDance - Demo Vote (microsoft.github.io)](https://microsoft.github.io/SandDance/app/)
+
+Potential Data sets: **MESA** [Multi-Ethnic Study of Atherosclerosis - Sleep Data - National Sleep Research Resource - NSRR](https://sleepdata.org/datasets/mesa)
