@@ -53,13 +53,13 @@
 3. DAL：数据访问层 --由C#实现
    + 调用MySQL的数据：实现全局表格导入和基本的选中部分属性列导入即可。仅实现查功能，暂时不需要实现增、删、改功能
 
-### BLL层
+#### BLL层
 
-#### C# <> Python
+##### C# <> Python
 
 方法总述：[一 、C#调用Python的使用总结 - 卢大鸽 - 博客园 (cnblogs.com)](https://www.cnblogs.com/ludage/p/12461403.html)
 
-##### 基于Flask的Python和C#交互
+###### 基于Flask的Python和C#交互
 
 [欢迎使用 Flask — Flask 0.10.1 文档 (jinkan.org)](http://docs.jinkan.org/docs/flask/index.html)
 
@@ -239,9 +239,9 @@ namespace FlaskClient
 
 
 
-### DAL层
+#### DAL层
 
-#### C# <> MySQL
+##### C# <> MySQL
 
 [MySQL :: MySQL Connector/NET Developer Guide :: 6 Connector/NET Tutorials](https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials.html)
 

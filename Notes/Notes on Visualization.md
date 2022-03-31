@@ -289,7 +289,7 @@ parallel_coordinates(iris.drop("Id", axis=1), "Species")
 
 HPC是Parallel Coordinates的Variation之一。When visualizing a large data set by the hierarchical parallel coordinates, the number of overlapping lines, obtained by the parallel coordinates, decreases.
 
-+ First, the data are grouped into some clusters by one of clustering methods 
++ First, the data are grouped into some clusters by one of the clustering methods 
 
 + Afterwards, the data are represented on the parallel coordinates, the centers of clusters are highlighted; the color intensity of the members of clusters depends on how far they are from the cluster center; different clusters are displayed by
 
