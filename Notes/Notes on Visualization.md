@@ -906,6 +906,290 @@ LLE则希望保持映射前后邻域结点之间的线性组合关系：
 
 ![image-20220330200436925](https://s2.loli.net/2022/03/30/sQv2yRteDwTkOLp.png)
 
+#### Quantitative Criteria of Mapping
+
+When visualizing multidimensional data, it is necessary to estimate the quality of mapping. 在该以“分析”为重点课题中，如何衡量和评价不同的降维和可视化方法的优劣也至关重要。
+
++ If the structure of the multidimensional data is known in advance, the quality of visualization is evaluated by how well the structure is preserved in the mapping.
++ If the structure is unknown(例如不知道是线性分布、流形分布还是没有规律)，就只能采用一些定量的general的手段来evaluate。
+
+大部分的降维方法都以 preservation of proximity (for example, distance, topology, neighborhood relationships, etc.) 为目标，因此衡量不同方法保留局部信息的能力是一种较有说服力的评价手段。
+
+##### Topology Preserving Measure
+
+![image-20220406113413878](https://s2.loli.net/2022/04/06/quC4fmrnX6IATpV.png)
+
+The obtained mapping is called a topology preserving transformation, if for any i, when Xij is the jth nearest neighbor of Xi , then Yij is the jth nearest neighbor of Yi , i.e. 即每个X的邻域里的各点在映射了以后也对应Y的邻域里的各点（通过在邻域内对各点到中心点距离排序来确定对应关系）
+
+###### Konig’s Topology Preservation Measure
+
+![image-20220406113854490](https://s2.loli.net/2022/04/06/Yp4oL8ETHNCbwPm.png)
+
+Konig方法根据原空间X点的邻域内的点在映射之后与Y点的关系分成了三类，打不同的分。若：
+
++ 原空间邻域内的某点映射之后在新空间中和目标点的距离的排序序号相同（和Spearman's Method等价），则打3分
++ 原空间邻域内的某点映射之后在新空间中和目标点的距离的排序序号不同，但该点至少映射到了新空间的部分邻域（最大μ个）内，则打2分
++ 原空间邻域内的某点映射之后在新空间中和目标点的距离的排序序号不同，且该点也没有映射到新空间的较小邻域（最大μ个）内，但该点至少映射到了较大的邻域内（μ和v之间），则打1分
+
+最后对每个点在原空间的μ个邻域点（m*μ个点）都打好分以后，采用如下公式计算Konig参数：
+
+![image-20220406132941566](https://s2.loli.net/2022/04/06/TfGAc2hQOSIrxj3.png)
+
+##### Distance Preservation Measure
+
+Distance Preservation Measure衡量映射前的每一组距离在映射后被preserve的情况。Topology Preservation Measure仅对点的邻域内的距离排序，而Distance Preservation Measure希望保证空间中的每一组距离的排序在映射之后都不变。
+
+If a transformation is the distance preservation, then the transformation is the topology preservation as well. However, the opposite proposition is not true.
+
+###### Spearman's Coefficient
+
+对于原空间的m个点，可以建立一个有效元素数量为m(m-1)/2的距离矩阵：
+
+![image-20220406133531665](https://s2.loli.net/2022/04/06/2UEPvXtBJ9yMrfx.png)
+
+对于映射后的空间，也建立相同的距离矩阵。Let the rank of the kth element in DY and DX be r(X (k)) and r(Y (k)), respectively. Spearman’s coefficient ρSp is defined by the formula:
+
+![image-20220406133641807](https://s2.loli.net/2022/04/06/LwJWDhKOCBxZ2V5.png)
+
+即对原空间和映射后的空间中的每组距离进行排序，求两个距离矩阵每组元素的序号差。如果两个距离矩阵中每对（对应位置）的元素序号都是相同的，则Spearman参数算出来为1。Spearman's Coefficient法是从元素顺序的角度衡量两组序列的相关性。
+
+In the case of the ideal topology preservation, Spearman’s coefficient is equal to one.
+
+上述两种方法，无论是对邻域还是全局，都是衡量了数据点之间的distance被preserve的好坏。
+
+### Combining MDS with Artificial Neural Network
+
+#### Multilayer Feed-Forward Neural Network
+
+##### Basic Structure
+
+对于多层神经网络，具体细节不再赘述。两层的前馈神经网络示意图：
+
+![image-20220406223411438](https://s2.loli.net/2022/04/06/yqUVKscHxuA7W5p.png)
+
+第l层的第j个神经元的输出由下式计算得出：
+
+![image-20220406223236296](https://s2.loli.net/2022/04/06/v1takhz4Wwp5lu8.png)
+
+If the error and activation functions are differentiable, the gradient descent strategy can be used for minimizing the error function to find the optimal weights.
+
+##### Back-Propogation Algorithm
+
+为了方便在后向传导的时候推导误差函数E对每个权值的导数，这里定义了一个物理量称为**每个神经元贡献的误差**。例如输出层（第L层）的第j个神经元贡献的误差为：
+
+![image-20220406223852736](https://s2.loli.net/2022/04/06/CAqGxasokt1Uhdj.png)
+
+where f′ is the derivative of the activation function f.
+
+同理，第l层的第k个神经元贡献的误差为：
+
+![image-20220406224013272](https://s2.loli.net/2022/04/06/3Do8XxNzvsOifnS.png)
+
+因此，E对各权值的导数可以较容易表示成：
+
+![image-20220406224113966](https://s2.loli.net/2022/04/06/blWA1vxIBMXCRNi.png)
+
+然而，只按t时刻误差的梯度方向调整，而没有考虑t时刻以前的梯度方向，从而容易使训练过程发生振荡，收敛缓慢。因此为了提高网络的训练速度，可以在权值的更新公式上增加一动量项（引入上一次迭代得到的权值）：
+
+![image-20220406224829657](https://s2.loli.net/2022/04/06/vpU4y9RIB3OCoSV.png)
+
+α is a positive constant (0 < α ≤ 1) the so-called momentum constant.
+
+[深度学习 --- BP算法详解（BP算法的优化）_zsffuture的博客-CSDN博客_动量bp算法](https://blog.csdn.net/weixin_42398658/article/details/83958133)
+
+##### Cross-validation
+
+对于样本充足的数据集，可以将数据集分成training set和testing set。However, if the whole data set is small, it is not advisable to divide it into two groups (training and testing). 
+
+数据集样本量较小的情况下，可以使用cross-validation的策略来计算平均误差。对于一个k-fold的cross-validation，具体做法如下：
+
++ 将数据集划分成k个子集（approximately equal size）
++ 每次选中k个子集中的一个作为测试集，将其余k-1个子集作为训练集
++ 使用每一组k-1个子集构成的训练集分别训练网络（共训练k次）
++ 使用每一组剩下的子集来测试该网络，得到一个误差量
++ 总误差取这k组误差的平均值
+
+If k is equal to the size m of the data set, this is called **leave-one-out** cross-validation.
+
+#### Visualization by Means of Feed-Forward Neural Networks
+
+##### Visualization Based on the Supervised Learning
+
+One of the disadvantages of multidimensional scaling (MDS) is that there is no way to project new data into a low-dimensional space without expensively regenerating the entire configuration from the augmented data set. 而采用神经网络的方法，实际上得到了一个从输入到输出的函数映射关系，对于新数据可以直接输入该网络得到映射后的坐标。
+
+采用监督学习来降维的方法主要是利用神经网络来拟合MDS数据，学习到一个MDS中隐性的从高维到低维的映射。具体流程很简单，即直接将训练集中原空间的数据先采用常规MDS算法（例如Sammon's mapping）得到其映射后的坐标。再将原空间的数据X作为神经网络的输入，MDS计算得到的X对应的Y作为标签，以监督学习的方式训练该神经网络。
+
+![image-20220407170355151](https://s2.loli.net/2022/04/07/jKhlaGN2f4ZIoOc.png)
+
+上图中在IRIS数据集中每一类选取了40个点作为训练集（浅色标注），用这些数据训练得到的神经网络输出的剩余30个数据（测试集）的映射点为深色标注出的点。Here we see that the points unseen by the network have found proper places.
+
+这里神经网络学习到的其实是MDS得到的一个映射的隐函数关系。
+
+##### Visualization Based on the Unsupervised Learning
+
+###### Auto-encoder
+
+采用无监督学习方法来做数据降维主要是利用Auto-encoder（也叫Auto-Associative Neural Network）。Auto-encoder采用最小重构误差为目标优化函数，和PCA的优化目标相同。因此，Auto-encoder是学习一个非线性映射，而PCA则是学习一个线性映射。其原理和PCA是相同的。It is a nonlinear generalization of the principal component analysis that uses an adaptive, multilayer encoder network to transform the multidimensional data into the low-dimensional space and a similar decoder network to recover the data from the low-dimensionality.
+
+![image-20220407171120076](https://s2.loli.net/2022/04/07/qBlCtKW6JHZgXn4.png)
+
+bottleneck layer的维度和降维空间的维度相同。对于特定的原空间数据点输入，其得到的就是该数据点映射后的坐标。目标优化函数为：
+
+![image-20220407171241578](https://s2.loli.net/2022/04/07/D3NTeEiHcdzRlvX.png)
+
+这里，神经网络学习到的就是一个使得重构误差最小的非线性映射（和PCA优化目标相同）。
+
+###### NeuroScale
+
+NeuroScale要求网络隐含层的激活函数一定是一个radia basis function(RBF)，即关于y轴对称且在正半轴单调递减。
+
+[Radial basis function(径向基函数->(高斯核函数))_勤睿的博客-CSDN博客_径向基核函数和高斯核函数](https://blog.csdn.net/qqqinrui/article/details/85554495)
+
+![image-20220407171641426](https://s2.loli.net/2022/04/07/5jrcfVPXRog7bSF.png)
+
+先求得各输入的加权求和与某个RBF的中心点μk的距离后，将这个距离作为RBF函数的输入。
+
+![image-20220407172117229](https://s2.loli.net/2022/04/07/X4QRLo8zumjYli9.png)
+
+较常用的RBF是高斯函数：
+
+![image-20220407171720315](https://s2.loli.net/2022/04/07/DqpoPhe6Ms5bCBG.png)
+
+μk为RBF的中心点，σk是width factor。这两个变量都是预先定义好的，不需要BP误差来更新。
+
+因为是无监督学习方式，误差定义成映射前各点的距离和映射后各点的距离的差值的平方求和，和MDS的优化目标相同。
+
+![image-20220407172340164](https://s2.loli.net/2022/04/07/FfpdW1X8bDqZlPA.png)
+
+进一步代入RBF函数，可以写成如下形式：
+
+![image-20220407172258952](https://s2.loli.net/2022/04/07/Dv7BSMck8xfLwlA.png)
+
+where wlk is the weight of connections between the kth basis function ϕk and the lth output yl .
+
+这里需要注意这种无监督学习方法和用先MDS映射后得到数据集作为监督数据的监督学习方法的区别。
+
+#### Vector Quantization Methods
+
+Self-organizing Map(SOM)和Neural Gas(NG)都属于vector quantization方法。Vector quantization is a method that usually forms a **quantized approximation to the distribution of the input data** Xl ∈ R n , l = 1,...,m, using a finite number mˆ of the so-called **reference (or codebook) vectors** Mi ∈ R n , i = 1,...,mˆ, mˆ ≪ m. 即采用维度相同，但数量远远小于原数据数量的几个reference vector来量化拟合原数据集的分布（cluster等特征）。
+
+##### Self-organizing Map
+
+A neural network architecture designed specifically for topographic mapping is the self-organizing map (SOM), which exploits an implicit lateral connectivity in the output layer of neurons. SOM is used for both clustering and visualization of multidimensional data.
+
+[【机器学习笔记】自组织映射网络（SOM） - 涉风 - 博客园 (cnblogs.com)](https://www.cnblogs.com/surfzjy/p/7944454.html)
+
+SOM采用竞争学习（competitive learning）的方式来无监督训练神经网络。SOM主要用于聚类，与Kmeans算法相似。所不同的是，SOM网络不需要预先提供聚类数量，类别的数量由网络自己组织学习得到（self-organizing）。它的基本思想是：拓扑映射中输出层神经元的空间位置对应于输入空间的特定域或特征 // 将（输入空间中）距离小的个体集合划分为同一类别（在拓扑映射输出层空间中距离小），而将距离大的个体集合划分为不同的类别。
+
+###### 拓扑映射
+
+神经生物学研究表明，不同的感觉输入（运动，视觉，听觉等）以**有序的方式**映射到大脑皮层的相应区域。
+
+这种映射我们称之为**拓扑映射**，它具有两个重要特性：
+
+- 在表示或处理的每个阶段，每一条传入的信息都保存在适当的上下文（相邻节点）中
+- 处理密切相关的信息的神经元之间保持密切，以便它们可以通过短突触连接进行交互
+
+我们的兴趣是建立人工的拓扑映射，以神经生物学激励的方式通过自组织进行学习。
+
+我们将遵循**拓扑映射形成的原则**：“**拓扑映射中输出层神经元的空间位置对应于输入空间的特定域或特征**”。
+
+###### 建立自组织映射
+
+SOM的主要目标是将任意维度的输入信号模式**转换**为一维或二维离散映射，并以拓扑有序的方式自适应地执行这种变换。
+
+因此，我们通过将神经元放置在一维或二维的网格节点上来建立我们的SOM。更高的尺寸图也是可能的，但不是那么常见。
+
+在竞争性学习过程中，神经元**有选择性地微调**来适应各种输入模式（刺激）或输入模式类别。如此调整的神经元（即获胜的神经元）的位置变得有序，并且在该网格上创建对于**输入特征**有意义的**坐标系**。因此，SOM形成输入模式所需的拓扑映射。我们可以将其视为主成分分析（PCA）的非线性推广。
+
+综上所述，SOM希望输出层神经网络节点的拓扑位置关系能反映输入数据的结构。
+
+![map](http://r.photo.store.qq.com/psb?/V13VpI7R48odcs/ShG2lMS2nEd2mA*UnY4ERgA9kmWIBPbSq.ZiS*aKOSA!/r/dPMAAAAAAAAA)
+
+如上图所示，蓝色斑点是训练数据的分布，而小白色斑点是从该分布中抽取得到的当前训练数据。首先（左图）SOM节点被任意地定位在数据空间中。我们选择最接近训练数据的节点作为获胜节点（用黄色突出显示）。它被移向训练数据，包括（在较小的范围内）其网格上的相邻节点。经过多次迭代后，网格（神经网络节点的拓扑位置）趋于数据分布（右图）。
+
+
+
+SOM网络仅有两层。假设原空间数据集的维度为D（即输入层有D个节点），输出层有N个神经元（输出节点）。每个输出神经元完全连接到输入层中的所有源节点，而输出神经元之间不互相连接。
+
+![map](https://s2.loli.net/2022/04/07/iNMS6pXbDIk8UFf.png)
+
+假设输出层是一个二维平面（神经元之间采用rectangular或hexagonal方式连接）：
+
+![image-20220407232621864](https://s2.loli.net/2022/04/07/M8pfn3scbjkUC26.png)
+
+则输出层每个神经元的位置由一个二维数组表示 (i,j)。每个神经元j与D的每个输入i有权值![image-20220407232822504](https://s2.loli.net/2022/04/07/BGQKsXZLxJHE7lb.png)连接，因此每个神经元有一个维度为D的权值集合Mij：
+
+![1649345478(1)](https://s2.loli.net/2022/04/07/rc5ZBiWJ2lSRfEK.png)
+
+这个集合被称作一个**reference vector**。
+
+SOP的学习过程被分为竞争，合作和适应这三个过程。在竞争过程中，对于每一个输入（有按顺序feed，随机顺序feed和逐个随机抽取三种输入数据集的方式），分别计算每个神经元（由reference vector表示）和输入的距离（此处以平方欧式距离为例），将距离最近的神经元称作winning neuron（竞争获胜的神经元）。这个神经元被激活。
+
+![image-20220407235004558](https://s2.loli.net/2022/04/07/FUvqbpKgQLM4xZ5.png)
+
+在神经生物学研究中，我们发现在一组兴奋神经元内存在**横向的相互作用**。当一个神经元被激活时，最近的邻居节点往往比那些远离的邻居节点更兴奋。并且存在一个随距离衰减的**拓扑邻域**。
+
+我们想为我们的SOM中的神经元定义一个类似的拓扑邻域。 如果Sij是神经元网格上神经元i和j之间的横向距离，我们取
+
+![image-20220408000101295](https://s2.loli.net/2022/04/08/jVIwNbyUWiXQHMq.png)
+
+作为我们的拓扑邻域，其中I(x)是获胜神经元的索引。该函数有几个重要的特性：它在获胜的神经元中是最大的，且关于该神经元对称，当神经元之间的距离达到无穷大时，它单调地衰减到零，它是平移不变的（即不依赖于获胜的神经元的位置）。
+
+神经元之间的距离可以定义成欧式距离或者neighborhood order：
+
+![image-20220408001900803](https://s2.loli.net/2022/04/08/6SitElAHwzWYfxP.png)
+
+SOM的一个特点是σ需要随着时间的推移而减少。常见的时间依赖性关系是指数型衰减：
+
+![image-20220408000158000](https://s2.loli.net/2022/04/08/L3c4QD7kRH8vSPw.png)
+
+即随着神经元之间距离的不断增大或迭代次数的不断增加，T描述的拓扑邻域范围都会越来越小，即拓扑位置关系相近的节点同步合作向输入数据集的局部结构靠拢。随着迭代次数的增加而减小拓扑邻域范围是为了保证网络参数的收敛。
+
+显然，我们的SOM必须涉及某种自适应或学习过程，通过这个过程，输出节点自组织，形成输入和输出之间的**特征映射**。
+
+地形邻域的一点是，不仅获胜的神经元能够得到权重更新，它的邻居也将更新它们的权重，尽管不如获胜神经元更新的幅度大。在实践中，适当的权重更新方式是：
+
+![image-20220408000921402](https://s2.loli.net/2022/04/08/4Z8cDMlJWgXH7Tn.png)
+
+其中我们有一个依赖于时间的学习率![image-20220408000943880](https://s2.loli.net/2022/04/08/TdmHFR3LXiuSWbe.png)，该更新适用于在多轮迭代中的所有训练模式x。每个学习权重更新的效果是将获胜的神经元及其邻居的权向量wi输入向量x移动。对该过程的迭代进行会使得网络的拓扑有序。
+
+示意图：
+
++ 假设我们在连续的二维输入空间中有四个数据点（×），并且希望将其映射到离散一维输出空间中的四个点（这四个点的拓扑邻接关系用连线表示）上：
+
+  ![vis1](https://s2.loli.net/2022/04/08/29EiQGlyN6h7zeC.png)
+
++ 我们随机选择一个数据点（⊗）进行训练。最接近的输出点表示获胜的神经元（⧫）。获胜的神经元向数据点移动一定量，并且两个相邻（相邻是通过是否连线（输出空间的位置关系）判断的，并不是按照在这个输入空间中的位置关系判断的，注意区分）神经元以较小的量移动（箭头指示方向）：
+
+  ![vis2](https://s2.loli.net/2022/04/08/DldVsT5tYvhNUPi.png)
+
++ 接下来，我们随机选择另一个数据点进行训练（⊗）。最接近的输出点给出新的获胜神经元（⧫）。获胜的神经元向数据点移动一定量，并且一个相邻的神经元也朝该数据点移动较小的量（箭头指示方向）：
+
+  ![vis3](https://s2.loli.net/2022/04/08/G7NCkxAmrnYEZe1.png)
+
++ 我们随机挑选数据点进行训练（⊗）。每个获胜的神经元向数据点移动一定的量，其相邻的神经元以较小的量向数据点移动（箭头指示方向）。最终整个输出网格将自身重新组织以表征输入空间。
+
+![vis4](https://s2.loli.net/2022/04/08/2CdV3Dig9qKkNW8.png)
+
+###### SOM算法总结
+
+我们有一个空间**连续**的输入空间，其中包含我们的输入向量。我们的目的是将其映射到低维的**离散**输出空间，其拓扑结构是通过在网格中布置一系列神经元形成的。我们的SOM算法提供了称为**特征映射**的非线性变换。
+
+SOM算法过程总结如下：
+
+1. **初始化** - 为初始权向量wjwj选择随机值。
+2. **采样** - 从输入空间中抽取一个训练输入向量样本xx。
+3. **匹配** - 找到权重向量最接近输入向量的获胜神经元I(x)。
+4. **更新** - 更新权重向量![image-20220408001445310](https://s2.loli.net/2022/04/08/7QBFWzvfhk8Ip9H.png)
+5. **继续** - 继续回到步骤2，直到特征映射趋于稳定。
+
+![image-20220408001709230](https://s2.loli.net/2022/04/08/ghEqS9CJ8Hs7Ro4.png)
+
+综上所述，SOM学习到如何用映射后的神经元之间的拓扑位置关系最好地表示（近似）输入数据的结构。如果用SOM来进行数据降维，则对于某输入数据点，输出得到的winning neuron的坐标就是降维后的数据点在映射空间的坐标。如果SOM用于聚类的话，则若所有数据集输入得到了K个winning neurons，那么该数据集就可以被分成K类。
+
+
+
 
 
 
