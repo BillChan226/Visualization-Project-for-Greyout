@@ -1,6 +1,8 @@
 # Graduation Project
 
-**3月31号会议记录：**
+### 笔记日志
+
+#### **3月31号会议记录**
 
 工作量的体现基本已经满足（各种可视化策略按照逻辑整理好就已经有可观的工作量了），现在欠缺的是将各种可视化策略通过一些更深层的分析串联在一起（所谓毕业设计）。本课题重在分析，一是要分析灰视和影响变量之间的关系（课题的研究客体）；二是要对可视化方法的特点进行分析（研究方法本身也是研究的客体）。
 
@@ -19,7 +21,7 @@
 
 例如，假如在第一步可视化灰度指数和脑血压关于时间的曲线时，发现两者仅在时间位于某一个时间区间内（或在另一个相关变量位于某个范围内时）才呈现正相关，则这几个变量都相互耦合，且不能直接将这些变量的全体数据拿来进行下一步可视化（可能会掩盖数据的intrinsic关联而导出错误的结论）。此时利用human-in-the-loop的优势，用户可以手工选择出一些区间段的数据，形成新的降维降数据量（矩阵的行列均缩小）后的数据集，进行下一步分析。假如这一步已经剥离了时间的维度，就可以采取相关矩阵，parallel coordinate，脸谱图等方法来进一步分析灰视与这些高维度变量的耦合关系了。总之，**Human-in-the-loop的思想应该贯穿整个课题设计！**
 
-**4月8号思考：**
+#### **4月8号思考**
 
 本课题的名称为：多维**动态**数据可视化分析方法研究。所谓“动态”，就强调对“时间”的考虑在灰视症状的产生发展过程中的重要性。而目前大部分的可视化项目在分析目标变量和多维自变量的关系时，考虑的都是静态数据（即目标变量仅与其余各变量在当前时间点的值有关（马尔可夫事件），时间不是单独的一个维度）。然而灰视现象在飞行员的飞行过程中是由多重因素在一段时间内的动态变化造成的（例如脑血压在短时间内的增加速率），因此在本课题中有必要将“时间”作为单独的维度来考察。目前想了如下几种方法来嵌入对“时间”的考虑：
 
@@ -30,7 +32,26 @@
 
 
 
+#### 4月10日
 
+UI界面的结构构思：
+
+**主页面**：包含上面一行工具栏，左边一列导航栏，下面一行调试栏。
+
+**工具栏**：数据（导入数据，查看数据，数据统计，数据筛选），用户登录，页面个性化（更换皮肤）
+
+**导航栏**：汇集各种数据操作（降维，可视化）方法。折叠方法分类如下：
+
++ 数据处理流（对数据流的各分支的处理记录，提示用户对哪些数据采取了怎样的操作，避免混淆）
+
++ 数据降维（线性、非线性、基于神经网络）
++ 数据直观呈现（散点图、折线图等）
++ 数据结构呈现（Andrews曲线，Parallel Coordinates等）
++ 数据分布呈现（KDE拟合，箱线图，小提琴图，联合概率分布等）
++ 数据关系呈现（函数关系拟合，热力图）
++ 各类别数据的表征维度规律（Radviz，脸谱图，dimensional stacking等）
+
+**调试栏**：打印调试信息
 
 
 
@@ -292,6 +313,119 @@ namespace FlaskClient
 [MySQL :: MySQL Connector/NET Developer Guide :: 6 Connector/NET Tutorials](https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials.html)
 
 [C# - MySQL数据库编程 简明教程 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/28401873)
+
+
+
+#### 交互策略
+
+具体C#和Python指令/数据交互流程：
+
++ 将Flask的HTTP请求设置为Post（因为Python脚本需要接收来自C#的指令）；
++ C#根据用户在UI界面触发的特定事件（button等）向Python脚本通过Flask服务器发送对应的指令；
++ Python脚本接收C#指令后对数据集进行相关操作，生成可视化后的图像，并保存到指定路径，将路径字符串返回给C#程序
++ C#程序通过pictureBox控件在对应的位置显示该图片
+
+C#交互代码：
+
+```c#
+private void uiButton1_Click(object sender, EventArgs e)
+        {
+            string log = "";//错误信息
+            string Url = "http://127.0.0.1:8000/plot/";//功能网址
+            string command = "pairplot";
+            string jsonParams = "#" + command + "#";
+            string result = RequestsPost(Url, jsonParams);
+            if (result == null)
+            {
+                log = "Failed to Connect Flask Server!";
+            }
+            else
+            {
+                if (result.Contains("default"))
+                {
+                    log = "There is an error running the algorithm." + "\r\n" + result;
+                }
+                else
+                {
+                    Bitmap plot = new Bitmap(result);
+                    pictureBox1.Image = plot;
+                    log = "Test Successed!";
+                }
+            }
+            MessageBox.Show(log);
+        }
+
+        /// <summary>
+        /// 通过网络地址和端口访问数据
+        /// </summary>
+        /// <param name="Url">网络地址</param>
+        /// <param name="jsonParas">json参数</param>
+        /// <returns></returns>
+        public string RequestsPost(string Url, string jsonParas)
+        {
+            string postContent = "";
+            string strURL = Url;
+            //创建一个HTTP请求  
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURL);
+            //Post请求方式  
+            request.Method = "POST";
+            //内容类型
+            request.ContentType = "application/json";
+            //设置参数，并进行URL编码 
+
+            string paraUrlCoded = jsonParas;//System.Web.HttpUtility.UrlEncode(jsonParas);   
+
+            byte[] payload;
+            //将Json字符串转化为字节  
+            payload = System.Text.Encoding.UTF8.GetBytes(paraUrlCoded);
+            //设置请求的ContentLength 
+            request.ContentLength = payload.Length;
+
+            //发送请求，获得请求流 
+            Stream writer;
+            try
+            {
+                writer = request.GetRequestStream();//获取用于写入请求数据的Stream对象
+            }
+            catch (Exception)
+            {
+                writer = null;
+                MessageBox.Show("连接服务器失败!");
+                return null;
+            }
+            //将请求参数写入流
+            writer.Write(payload, 0, payload.Length);
+            writer.Close();//关闭请求流
+            HttpWebResponse response;
+            try
+            {
+                //获得响应流
+                response = (HttpWebResponse)request.GetResponse();
+            }
+            catch (WebException ex)
+            {
+                response = ex.Response as HttpWebResponse;
+                postContent = "default: The response is null." + "\r\n" + "Exception: " + ex.Message;
+            }
+            if (response != null)
+            {
+                try
+                {
+                    Stream s = response.GetResponseStream();
+                    StreamReader sRead = new StreamReader(s);
+                    postContent = sRead.ReadToEnd();
+                    sRead.Close();
+                }
+                catch (Exception e)
+                {
+                    postContent = "default: The data stream is not readable." + "\r\n" + e.Message;
+                }
+            }
+            return postContent;//返回Json数据
+        }
+```
+
+
 
 
 

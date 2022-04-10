@@ -52,5 +52,10 @@ if __name__ == '__main__':
 
 
 
-
-
+def pairplot():
+    iris = sns.load_dataset(name='iris', cache=True, data_home='F:/SJTU/Projects/毕业设计/Tryout/visualization techniques/')
+    plt.figure(figsize=(10,8), dpi= 80)
+    sns.pairplot(data=iris, kind="scatter", hue="species") #矩阵散点图 scatter matrices
+    Path_to_plot = 'F:\\SJTU\\Projects\\Graduation Project\\Visualization-Project-for-Greyout\\visualization_techniques\\Images_to_Plot\\test.jpg'
+    plt.savefig(Path_to_plot, dpi=750, bbox_inches = 'tight')
+    return Path_to_plot
