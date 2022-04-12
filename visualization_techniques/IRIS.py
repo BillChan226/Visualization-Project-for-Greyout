@@ -11,8 +11,8 @@ plt.style.use('seaborn-whitegrid')
 if __name__ == '__main__':
 
     # load data
-    iris = sns.load_dataset(name='iris', cache=True, data_home='F:/SJTU/Projects/毕业设计/Tryout/visualization techniques/')
-
+    #iris = sns.load_dataset(name='iris', cache=True, data_home='F:/SJTU/Projects/毕业设计/Tryout/visualization techniques/Iris.csv')
+    iris = pd.read_csv('C:/Users/Bill Chan/Desktop/IrisLa.csv')
     # 简单了解一下数据集的结构
     print(iris.head(3))
 
@@ -20,6 +20,26 @@ if __name__ == '__main__':
     print("\n", iris.describe())
 
     print("\n", iris.Species.value_counts()) #iris['species'].value_counts()
+
+
+    SepalLength_Setosa = iris.SepalLengthCm[iris.Species == 'Iris-setosa']
+    SepalLength_versicolor = iris.SepalLengthCm[iris.Species == 'Iris-versicolor']
+    SepalLength_virginica = iris.SepalLengthCm[iris.Species == 'Iris-virginica']
+
+    # seaborn模块绘制分组的直方图和核密度图
+
+    sns.distplot(SepalLength_Setosa, bins = 20, kde = False, hist_kws = {'color':'steelblue'}, label = 'Setosa')
+    # 绘制女性年龄的直方图
+    sns.distplot(SepalLength_versicolor, bins = 20, kde = False, hist_kws = {'color':'purple'}, label = 'Versicolor')
+    sns.distplot(SepalLength_versicolor, bins = 20, kde = False, hist_kws = {'color':'red'}, label = 'Virginica')
+    plt.title('Histogram of Each Kind w.r.t. Sepal Length')
+    plt.xlabel('Sepal Length (cm)')
+    plt.ylabel('Frequency')
+    # 显示图例
+    plt.legend()
+    # 显示图形
+    plt.show()
+
 
     # 利用pandas对象的 .plot() 方法绘制
     plt.figure(figsize=(16, 8), dpi=320)
@@ -52,10 +72,45 @@ if __name__ == '__main__':
 
 
 
-def pairplot():
-    iris = sns.load_dataset(name='iris', cache=True, data_home='F:/SJTU/Projects/毕业设计/Tryout/visualization techniques/')
+
+
+def pairPlot():
+    #iris = sns.load_dataset(name='iris', cache=True, data_home='F:/SJTU/Projects/毕业设计/Tryout/visualization techniques/')
+    iris = pd.read_csv('C:/Users/Bill Chan/Desktop/IrisLa.csv')
     plt.figure(figsize=(10,8), dpi= 80)
-    sns.pairplot(data=iris, kind="scatter", hue="species") #矩阵散点图 scatter matrices
-    Path_to_plot = 'F:\\SJTU\\Projects\\Graduation Project\\Visualization-Project-for-Greyout\\visualization_techniques\\Images_to_Plot\\test.jpg'
+    sns.pairplot(data=iris, kind="scatter", hue="Species") #矩阵散点图 scatter matrices
+    Path_to_plot = 'F:\\SJTU\\Projects\\Graduation Project\\Visualization-Project-for-Greyout\\visualization_techniques\\Images_to_Plot\\pair.jpg'
+    plt.savefig(Path_to_plot, dpi=750, bbox_inches = 'tight')
+    return Path_to_plot
+
+def histoPlot():
+    iris = pd.read_csv('C:/Users/Bill Chan/Desktop/IrisLa.csv')
+    # 简单了解一下数据集的结构
+    print(iris.head(3))
+
+    # 描述统计
+    print("\n", iris.describe())
+
+    print("\n", iris.Species.value_counts()) #iris['species'].value_counts()
+
+
+    SepalLength_Setosa = iris.SepalLengthCm[iris.Species == 'Iris-setosa']
+    SepalLength_versicolor = iris.SepalLengthCm[iris.Species == 'Iris-versicolor']
+    SepalLength_virginica = iris.SepalLengthCm[iris.Species == 'Iris-virginica']
+
+    # seaborn模块绘制分组的直方图和核密度图
+
+    sns.distplot(SepalLength_Setosa, bins = 20, kde = False, hist_kws = {'color':'steelblue'}, label = 'Setosa')
+    # 绘制女性年龄的直方图
+    sns.distplot(SepalLength_versicolor, bins = 20, kde = False, hist_kws = {'color':'purple'}, label = 'Versicolor')
+    sns.distplot(SepalLength_versicolor, bins = 20, kde = False, hist_kws = {'color':'red'}, label = 'Virginica')
+    plt.title('Histogram of Each Kind w.r.t. Sepal Length')
+    plt.xlabel('Sepal Length (cm)')
+    plt.ylabel('Frequency')
+    # 显示图例
+    plt.legend()
+    # 显示图形
+    #plt.show()
+    Path_to_plot = 'F:\\SJTU\\Projects\\Graduation Project\\Visualization-Project-for-Greyout\\visualization_techniques\\Images_to_Plot\\histo.jpg'
     plt.savefig(Path_to_plot, dpi=750, bbox_inches = 'tight')
     return Path_to_plot

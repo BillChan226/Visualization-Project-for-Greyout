@@ -96,5 +96,10 @@ namespace Sunny.UI.Demo
         {
             index.WriteConsole("SelectedIndex");
         }
+
+        private void uiDataGridView1_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

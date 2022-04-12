@@ -29,20 +29,23 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Dataset");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Data Flow");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Dim-Reduction");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Visualization");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Theme");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Dataset");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Data Flow");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Dim-Reduction");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Visualization");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Theme");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FMain));
-            this.uiLogo1 = new Sunny.UI.UILogo();
             this.uiAvatar = new Sunny.UI.UIAvatar();
             this.StyleManager = new Sunny.UI.UIStyleManager(this.components);
             this.uiContextMenuStrip1 = new Sunny.UI.UIContextMenuStrip();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.uiLogo1 = new Sunny.UI.UILogo();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.uiLabel1 = new Sunny.UI.UILabel();
             this.Header.SuspendLayout();
             this.uiContextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Footer
@@ -64,51 +67,36 @@
             this.Aside.ShowSecondBackColor = true;
             this.Aside.ShowTips = true;
             this.Aside.Size = new System.Drawing.Size(250, 517);
-            this.Aside.Style = Sunny.UI.UIStyle.Custom;
             this.Aside.MenuItemClick += new Sunny.UI.UINavMenu.OnMenuItemClick(this.Aside_MenuItemClick);
             // 
             // Header
             // 
             this.Header.Controls.Add(this.uiAvatar);
-            this.Header.Controls.Add(this.uiLogo1);
             this.Header.DropMenuFont = new System.Drawing.Font("Times New Roman", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Header.Font = new System.Drawing.Font("微软雅黑", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Header.Location = new System.Drawing.Point(2, 35);
-            treeNode1.ImageIndex = 1;
-            treeNode1.Name = "节点0";
-            treeNode1.Text = "Dataset";
-            treeNode2.Name = "节点1";
-            treeNode2.Text = "Data Flow";
-            treeNode3.Name = "节点2";
-            treeNode3.Text = "Dim-Reduction";
-            treeNode4.Name = "节点0";
-            treeNode4.Text = "Visualization";
-            treeNode5.Name = "节点2";
-            treeNode5.Text = "Theme";
+            treeNode16.ImageIndex = 1;
+            treeNode16.Name = "节点0";
+            treeNode16.Text = "Dataset";
+            treeNode17.Name = "节点1";
+            treeNode17.Text = "Data Flow";
+            treeNode18.Name = "节点2";
+            treeNode18.Text = "Dim-Reduction";
+            treeNode19.Name = "节点0";
+            treeNode19.Text = "Visualization";
+            treeNode20.Name = "节点2";
+            treeNode20.Text = "Theme";
             this.Header.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5});
+            treeNode16,
+            treeNode17,
+            treeNode18,
+            treeNode19,
+            treeNode20});
             this.Header.NodeSize = new System.Drawing.Size(110, 45);
             this.Header.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Header.SelectedIndex = 0;
             this.Header.Size = new System.Drawing.Size(1020, 110);
-            this.Header.Style = Sunny.UI.UIStyle.Custom;
             this.Header.MenuItemClick += new Sunny.UI.UINavBar.OnMenuItemClick(this.Header_MenuItemClick);
-            // 
-            // uiLogo1
-            // 
-            this.uiLogo1.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uiLogo1.Location = new System.Drawing.Point(2, 15);
-            this.uiLogo1.MaximumSize = new System.Drawing.Size(300, 80);
-            this.uiLogo1.MinimumSize = new System.Drawing.Size(300, 80);
-            this.uiLogo1.Name = "uiLogo1";
-            this.uiLogo1.Size = new System.Drawing.Size(300, 80);
-            this.uiLogo1.Style = Sunny.UI.UIStyle.Custom;
-            this.uiLogo1.TabIndex = 3;
-            this.uiLogo1.Text = "uiLogo1";
             // 
             // uiAvatar
             // 
@@ -150,38 +138,85 @@
             this.关于ToolStripMenuItem1.Text = "关于";
             this.关于ToolStripMenuItem1.Click += new System.EventHandler(this.关于ToolStripMenuItem1_Click);
             // 
+            // uiLogo1
+            // 
+            this.uiLogo1.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uiLogo1.Location = new System.Drawing.Point(68, 53);
+            this.uiLogo1.MaximumSize = new System.Drawing.Size(300, 80);
+            this.uiLogo1.MinimumSize = new System.Drawing.Size(300, 80);
+            this.uiLogo1.Name = "uiLogo1";
+            this.uiLogo1.Size = new System.Drawing.Size(300, 80);
+            this.uiLogo1.TabIndex = 3;
+            this.uiLogo1.Text = "uiLogo1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(21, 50);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(257, 95);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // uiLabel1
+            // 
+            this.uiLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.uiLabel1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel1.ForeColor = System.Drawing.Color.White;
+            this.uiLabel1.Location = new System.Drawing.Point(10, 5);
+            this.uiLabel1.Name = "uiLabel1";
+            this.uiLabel1.Size = new System.Drawing.Size(180, 25);
+            this.uiLabel1.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel1.StyleCustomMode = true;
+            this.uiLabel1.TabIndex = 7;
+            this.uiLabel1.Text = "Greyout Visualization";
+            this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FMain
             // 
+            this.AllowAddControlOnTitle = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1024, 720);
+            this.Controls.Add(this.uiLabel1);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.uiLogo1);
             this.ExtendBox = true;
             this.ExtendMenu = this.uiContextMenuStrip1;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1024, 720);
             this.Name = "FMain";
             this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
+            this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ShowDragStretch = true;
             this.ShowRadius = false;
             this.ShowShadow = true;
-            this.Text = "SunnyUI.Net";
+            this.Text = "Greyout Visualization";
             this.Selecting += new Sunny.UI.UIMainFrame.OnSelecting(this.FMain_Selecting);
             this.HotKeyEventHandler += new Sunny.UI.HotKeyEventHandler(this.FMain_HotKeyEventHandler);
+            this.Load += new System.EventHandler(this.FMain_Load);
+            this.Controls.SetChildIndex(this.uiLogo1, 0);
             this.Controls.SetChildIndex(this.Footer, 0);
             this.Controls.SetChildIndex(this.Header, 0);
             this.Controls.SetChildIndex(this.Aside, 0);
+            this.Controls.SetChildIndex(this.pictureBox1, 0);
+            this.Controls.SetChildIndex(this.uiLabel1, 0);
             this.Header.ResumeLayout(false);
             this.uiContextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private UILogo uiLogo1;
         private UIAvatar uiAvatar;
         private UIStyleManager StyleManager;
         private UIContextMenuStrip uiContextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem1;
+        private UILogo uiLogo1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private UILabel uiLabel1;
     }
 }

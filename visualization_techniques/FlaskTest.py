@@ -24,8 +24,10 @@ def startTransfer(name=None):
         print(para)        #输出接收到的信息
         array = str(para).split('#')
         print(array)
-        if(str(array[1]) == 'pairplot'):
-            path_to_plot = IRIS.pairplot()
+        if(str(array[1]) == 'pairPlot'):
+            path_to_plot = IRIS.pairPlot()
+        if(str(array[1]) == 'histoPlot'):
+            path_to_plot = IRIS.histoPlot()
         return str(path_to_plot)
 
 

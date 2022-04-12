@@ -185,3 +185,5 @@ F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool
 F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\SunnyUI.Demo.csproj.CopyComplete
 F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\SunnyUI.Demo.exe
 F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\SunnyUI.Demo.pdb
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Dataview.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Utils.PictureZoomIn.resources

@@ -51,6 +51,7 @@
             this.uiSymbolButton1.Symbol = 61568;
             this.uiSymbolButton1.TabIndex = 34;
             this.uiSymbolButton1.Text = "数据";
+            this.uiSymbolButton1.TipsFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiSymbolButton1.Click += new System.EventHandler(this.uiSymbolButton1_Click);
             // 
             // uiImageButton3
@@ -97,13 +98,13 @@
             // 
             // BarChart
             // 
-            this.BarChart.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.BarChart.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.BarChart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
+            this.BarChart.LegendFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BarChart.Location = new System.Drawing.Point(30, 55);
             this.BarChart.MinimumSize = new System.Drawing.Size(1, 1);
             this.BarChart.Name = "BarChart";
             this.BarChart.Size = new System.Drawing.Size(670, 430);
+            this.BarChart.SubFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BarChart.TabIndex = 35;
             this.BarChart.Text = "uiBarChartEx1";
             // 
@@ -118,6 +119,7 @@
             this.uiSymbolButton2.Symbol = 61568;
             this.uiSymbolButton2.TabIndex = 36;
             this.uiSymbolButton2.Text = "数据";
+            this.uiSymbolButton2.TipsFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiSymbolButton2.Click += new System.EventHandler(this.uiSymbolButton2_Click);
             // 
             // FBarChartEx

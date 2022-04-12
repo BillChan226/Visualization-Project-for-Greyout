@@ -1,0 +1,13 @@
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\bin\Debug\GOUIProject.exe.config
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\bin\Debug\GOUIProject.exe
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\bin\Debug\GOUIProject.pdb
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\bin\Debug\SunnyUI.Common.dll
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\bin\Debug\SunnyUI.dll
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\obj\Debug\GOUIProject.csproj.AssemblyReference.cache
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\obj\Debug\GOUIProject.Form1.resources
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\obj\Debug\GOUIProject.Properties.Resources.resources
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\obj\Debug\GOUIProject.csproj.GenerateResource.cache
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\obj\Debug\GOUIProject.csproj.CoreCompileInputs.cache
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\obj\Debug\GOUIProject.csproj.CopyComplete
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\obj\Debug\GOUIProject.exe
+F:\SJTU\Projects\毕业设计\GOUIProject\GOUIProject\obj\Debug\GOUIProject.pdb

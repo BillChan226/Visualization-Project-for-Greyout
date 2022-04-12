@@ -30,11 +30,11 @@ namespace Sunny.UI.Demo
         private void InitializeComponent()
         {
             this.uiSymbolButton1 = new Sunny.UI.UISymbolButton();
+            this.BarChart = new Sunny.UI.UIBarChart();
+            this.uiSymbolButton2 = new Sunny.UI.UISymbolButton();
             this.uiImageButton3 = new Sunny.UI.UIImageButton();
             this.uiImageButton2 = new Sunny.UI.UIImageButton();
             this.uiImageButton1 = new Sunny.UI.UIImageButton();
-            this.BarChart = new Sunny.UI.UIBarChart();
-            this.uiSymbolButton2 = new Sunny.UI.UISymbolButton();
             ((System.ComponentModel.ISupportInitialize)(this.uiImageButton3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiImageButton2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiImageButton1)).BeginInit();
@@ -52,7 +52,36 @@ namespace Sunny.UI.Demo
             this.uiSymbolButton1.Symbol = 61952;
             this.uiSymbolButton1.TabIndex = 34;
             this.uiSymbolButton1.Text = "数据";
+            this.uiSymbolButton1.TipsFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiSymbolButton1.Click += new System.EventHandler(this.uiSymbolButton1_Click);
+            // 
+            // BarChart
+            // 
+            this.BarChart.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.BarChart.LegendFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BarChart.Location = new System.Drawing.Point(30, 55);
+            this.BarChart.MinimumSize = new System.Drawing.Size(1, 1);
+            this.BarChart.Name = "BarChart";
+            this.BarChart.Size = new System.Drawing.Size(670, 430);
+            this.BarChart.SubFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BarChart.TabIndex = 29;
+            this.BarChart.Text = "uiBarChart1";
+            // 
+            // uiSymbolButton2
+            // 
+            this.uiSymbolButton2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.uiSymbolButton2.Enabled = false;
+            this.uiSymbolButton2.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uiSymbolButton2.Location = new System.Drawing.Point(454, 505);
+            this.uiSymbolButton2.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiSymbolButton2.Name = "uiSymbolButton2";
+            this.uiSymbolButton2.Padding = new System.Windows.Forms.Padding(28, 0, 0, 0);
+            this.uiSymbolButton2.Size = new System.Drawing.Size(100, 27);
+            this.uiSymbolButton2.Symbol = 61473;
+            this.uiSymbolButton2.TabIndex = 35;
+            this.uiSymbolButton2.Text = "更新";
+            this.uiSymbolButton2.TipsFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiSymbolButton2.Click += new System.EventHandler(this.uiSymbolButton2_Click);
             // 
             // uiImageButton3
             // 
@@ -95,33 +124,6 @@ namespace Sunny.UI.Demo
             this.uiImageButton1.Text = "      Default";
             this.uiImageButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.uiImageButton1.Click += new System.EventHandler(this.uiImageButton1_Click);
-            // 
-            // BarChart
-            // 
-            this.BarChart.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            this.BarChart.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.BarChart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
-            this.BarChart.Location = new System.Drawing.Point(30, 55);
-            this.BarChart.MinimumSize = new System.Drawing.Size(1, 1);
-            this.BarChart.Name = "BarChart";
-            this.BarChart.Size = new System.Drawing.Size(670, 430);
-            this.BarChart.TabIndex = 29;
-            this.BarChart.Text = "uiBarChart1";
-            // 
-            // uiSymbolButton2
-            // 
-            this.uiSymbolButton2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.uiSymbolButton2.Enabled = false;
-            this.uiSymbolButton2.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uiSymbolButton2.Location = new System.Drawing.Point(454, 505);
-            this.uiSymbolButton2.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiSymbolButton2.Name = "uiSymbolButton2";
-            this.uiSymbolButton2.Padding = new System.Windows.Forms.Padding(28, 0, 0, 0);
-            this.uiSymbolButton2.Size = new System.Drawing.Size(100, 27);
-            this.uiSymbolButton2.Symbol = 61473;
-            this.uiSymbolButton2.TabIndex = 35;
-            this.uiSymbolButton2.Text = "更新";
-            this.uiSymbolButton2.Click += new System.EventHandler(this.uiSymbolButton2_Click);
             // 
             // FBarChart
             // 

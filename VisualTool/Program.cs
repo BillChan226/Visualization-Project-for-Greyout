@@ -13,7 +13,9 @@ namespace Sunny.UI.Demo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FMain());
+            FMain Main_Form = new FMain();
+            Application.Run(Main_Form);
+            
         }
     }
 }
