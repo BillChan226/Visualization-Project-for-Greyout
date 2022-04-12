@@ -154,7 +154,7 @@ namespace Sunny.UI.Demo
         {
             if(FMain.DataSetPath == "Null")
             {
-                ShowErrorTip("No Dataset to Preview!");
+                ShowErrorTip("No Dataset to Analyze!");
                 return;
             }
             ShowWaitForm("Analyzing...");
