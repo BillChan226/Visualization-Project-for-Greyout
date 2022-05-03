@@ -142,7 +142,7 @@ iplot(figure, config={'scrollzoom': True})
 
 [ 核密度估计 Kernel Density Estimation(KDE)_NeverMore_7的博客-CSDN博客_核密度估计](https://blog.csdn.net/unixtch/article/details/78556499)
 
-KDE是对直方图的一个自然拓展 采用非参数的方法估计一个分布的概率密度函数
+KDE是对直方图的一个自然拓展，采用非参数的方法估计一个分布的概率密度函数
 
 一般估计概率密度会想到先求分布函数，再对其求导得到。一个最简单而有效的估计分布函数的方法是所谓的`经验分布函数`（empirical distribution function）：
 
@@ -297,7 +297,7 @@ HPC是Parallel Coordinates的Variation之一。When visualizing a large data set
 
 ##### Radviz
 
-体现每条数据各特征之间的大小（比例）关系。大小比例近似的数据分布在一起。
+【【【特征之间的大小（比例）关系。大小比例近似的数据分布在一起。
 
 Radviz可视化原理是将一系列多维空间的点通过非线性方法映射到二维空间的可视化技术，是基于圆形平行坐标系的设计思想而提出的多维可视化方法。圆形的m条半径表示m维空间，使用坐标系中的一点代表多为信息对象，其实现原理参照物理学中物体受力平衡定理。 多维空间的点映射到二维可视空间的位置由弹簧引力分析模型确定。 ([Radviz可视化原理 - CSDN博客](https://link.zhihu.com/?target=https%3A//blog.csdn.net/Haiyang_Duan/article/details/78985225)) ，能展示一些数据的可区分规律。
 

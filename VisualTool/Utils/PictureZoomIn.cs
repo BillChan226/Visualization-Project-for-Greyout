@@ -14,7 +14,6 @@ namespace Sunny.UI.Demo.Utils
     {
         public PictureZoomIn(System.Drawing.Image Image_to_Zoom)
         {
-            
             InitializeComponent();
             this.pictureBox1.Image = Image_to_Zoom;
         }

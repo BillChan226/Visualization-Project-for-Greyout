@@ -351,3 +351,77 @@ SelectedIndexChanged()事件可以用于级联下拉框（根据上一级确定�
 方法和事件与ListBox类似 
 
 ItemCheck()事件：具体某一项被Check时
+
+
+
+## PictureBox
+
+表示用于显示图像的 Windows 图片框控件
+
+[Winform窗体学习笔记 第十五篇 PictureBox 类_liuxiaomao1988的博客-CSDN博客_picturebox winform](https://blog.csdn.net/liuxiaomao1988/article/details/87387334)
+
+### 常用的属性
+
+PictureBox 属性：
+
+- SizeMode：改变显示图片的方式，存在一个PictureBoxSizeMode枚举。
+  AutoSize，CenterImage，Normal，StretchImage（变形），Zoom（缩小）。
+
+- BorderStyle：指示控件的边框样式。
+
+- BackColor：获取或设置控件的背景色。指定为透明色。
+
+  ```c#
+  pbox.BackColor = Color.Transparent;
+  ```
+
+- Image：获取或设置由 PictureBox 显示的图像。
+
+- ErrorImage：获取或设置在图像加载过程中发生错误时，或者图像加载取消时要显示的图像。
+
+- ImageLocation：获取或设置要在 [PictureBox](http://msdn.microsoft.com/zh-cn/library/system.windows.forms.picturebox.aspx) 中显示的图像的路径或 URL。
+
+- InitialImage：获取或设置在加载主图像时显示在 [PictureBox](http://msdn.microsoft.com/zh-cn/library/system.windows.forms.picturebox.aspx) 控件中的图像。
+
+- Location：获取或设置该控件的左上角相对于其容器的左上角的坐标。
+
+- Size：获取或设置控件的高度和宽度。
+  代码：pbox.Size = new System.Drawing.Size(20, 18); 
+
+- SizeMode：指示如何显示图像。
+  StretchImage（完全填充）、AutoSize（正常大小显示）、CenterImage（显示图像的中心部分）、Zoom（缩小或放大完全显示）
+
+常常需要通过代码对PictureBox的Image属性赋值：
+
+```c#
+Bitmap bitmap = new Bitmap(filepath); //创建System.Drawing.Image对象，用图片路径构造该对象
+pictureBox1.Image = bitmap; //赋值
+```
+
+
+
+
+
+## 常用操作
+
+### 窗口之间参数传递
+
+[winform c# 窗体传值几种方式_sd6275832ght的博客-CSDN博客_winform窗体传值](https://blog.csdn.net/sd6275832ght/article/details/118889523)
+
+### Winform内表格
+
++ 嵌入Excel控件：[winform 读取excel 数据显示到窗体中_C# 下功能强大的开源EXCEL控件推荐——ReoGrid..._weixin_39536728的博客-CSDN博客](https://blog.csdn.net/weixin_39536728/article/details/111226447)
+
+
+
+### 动态生成控件
+
+往panel添加Label控件：[c#winform怎样实现动态生成控件 - 云+社区 - 腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1802710)
+
+往panel添加Button控件：[Winform(应用技巧)动态创建Button控件-罗分明网络博客 (luofenming.com)](http://www.luofenming.com/show.aspx?id=ART2022011600001)
+
+
+
+### 数据读取
+
+读取excel及csv文件：[Winform入门(六) 读取excel及csv文件_finedayforu的博客-CSDN博客](https://blog.csdn.net/finedayforu/article/details/108464800)

@@ -10,9 +10,13 @@ plt.style.use('seaborn-whitegrid')
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
+
+    a = [1, 2, 3]
+    s = sum(i*a[i] for i in range (0, 3))
+    print ("s = ", s)
     # load data
     #iris = sns.load_dataset(name='iris', cache=True, data_home='F:/SJTU/Projects/毕业设计/Tryout/visualization techniques/Iris.csv')
-    iris = pd.read_csv('C:/Users/Bill Chan/Desktop/IrisLa.csv')
+    iris = pd.read_csv('D:/Path4Code/Iris.csv')
     # 简单了解一下数据集的结构
     print(iris.head(3))
 
@@ -44,7 +48,8 @@ if __name__ == '__main__':
     # 利用pandas对象的 .plot() 方法绘制
     plt.figure(figsize=(16, 8), dpi=320)
     colors = ['blue', 'yellow', 'red']
-    iris.plot(kind='scatter', x='SepalLengthCm', y='SepalWidthCm', c=colors, s=15)
+    sns.relplot(data=iris, kind="scatter", x='SepalLengthCm', y='SepalWidthCm', s=15, hue="Species")
+    #iris.plot(kind='scatter', x='SepalLengthCm', y='SepalWidthCm', c=colors, s=15)
     plt.title(u'Sepal_Length VS Sepal_Width', fontsize=15)
     plt.show()
 
@@ -71,12 +76,9 @@ if __name__ == '__main__':
     plt.show()
 
 
-
-
-
 def pairPlot():
     #iris = sns.load_dataset(name='iris', cache=True, data_home='F:/SJTU/Projects/毕业设计/Tryout/visualization techniques/')
-    iris = pd.read_csv('C:/Users/Bill Chan/Desktop/IrisLa.csv')
+    iris = pd.read_csv('C:/Users/Bill Chan/Desktop/Iris.csv')
     plt.figure(figsize=(10,8), dpi= 80)
     sns.pairplot(data=iris, kind="scatter", hue="Species") #矩阵散点图 scatter matrices
     Path_to_plot = 'F:\\SJTU\\Projects\\Graduation Project\\Visualization-Project-for-Greyout\\visualization_techniques\\Images_to_Plot\\pair.jpg'
@@ -84,7 +86,7 @@ def pairPlot():
     return Path_to_plot
 
 def histoPlot():
-    iris = pd.read_csv('C:/Users/Bill Chan/Desktop/IrisLa.csv')
+    iris = pd.read_csv('C:/Users/Bill Chan/Desktop/Iris.csv')
     # 简单了解一下数据集的结构
     print(iris.head(3))
 

@@ -131,6 +131,12 @@
     <Compile Include="Controls\FSplitContainer.designer.cs">
       <DependentUpon>FSplitContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dataset\DataAnalysis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dataset\DataAnalysis.Designer.cs">
+      <DependentUpon>DataAnalysis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dataset\Dataview.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -379,6 +385,30 @@
     <Compile Include="Forms\FColorful.Designer.cs">
       <DependentUpon>FColorful.cs</DependentUpon>
     </Compile>
+    <Compile Include="Stage\Stage1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stage\Stage1.Designer.cs">
+      <DependentUpon>Stage1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Stage\Stage2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stage\Stage2.Designer.cs">
+      <DependentUpon>Stage2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Stage\Stage3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stage\Stage3.Designer.cs">
+      <DependentUpon>Stage3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Stage\Stage4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stage\Stage4.Designer.cs">
+      <DependentUpon>Stage4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Units\FCommon.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -391,6 +421,120 @@
     </Compile>
     <Compile Include="Utils\PictureZoomIn.Designer.cs">
       <DependentUpon>PictureZoomIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Dim2Line.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Dim2Line.Designer.cs">
+      <DependentUpon>Dim2Line.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Distribution.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Distribution.Designer.cs">
+      <DependentUpon>Distribution.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Fitting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Fitting.Designer.cs">
+      <DependentUpon>Fitting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Heuristics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Heuristics.Designer.cs">
+      <DependentUpon>Heuristics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Hierachical_Display.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Hierachical_Display.Designer.cs">
+      <DependentUpon>Hierachical_Display.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Line.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Line.Designer.cs">
+      <DependentUpon>Line.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Multi_Feature_Object.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Multi_Feature_Object.Designer.cs">
+      <DependentUpon>Multi_Feature_Object.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\point2point.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\point2point.Designer.cs">
+      <DependentUpon>point2point.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Scatter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Distribution\Scatter.Designer.cs">
+      <DependentUpon>Scatter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Statistics\Box Plot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Statistics\Box Plot.Designer.cs">
+      <DependentUpon>Box Plot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Statistics\Heatmap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Statistics\Heatmap.Designer.cs">
+      <DependentUpon>Heatmap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Statistics\Histogram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Statistics\Histogram.Designer.cs">
+      <DependentUpon>Histogram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Statistics\KDE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Statistics\KDE.Designer.cs">
+      <DependentUpon>KDE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Statistics\Statistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Statistics\Statistics.Designer.cs">
+      <DependentUpon>Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal D2L.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal D2L.Designer.cs">
+      <DependentUpon>Temporal D2L.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal Heuristics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal Heuristics.Designer.cs">
+      <DependentUpon>Temporal Heuristics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal MFO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal MFO.Designer.cs">
+      <DependentUpon>Temporal MFO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal Scatter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal Scatter.Designer.cs">
+      <DependentUpon>Temporal Scatter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Visualization\Temporal\Temporal.Designer.cs">
+      <DependentUpon>Temporal.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Charts\FBarChartEx.resx">
       <DependentUpon>FBarChartEx.cs</DependentUpon>
@@ -427,6 +571,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\FSplitContainer.resx">
       <DependentUpon>FSplitContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dataset\DataAnalysis.resx">
+      <DependentUpon>DataAnalysis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dataset\Dataview.resx">
       <DependentUpon>Dataview.cs</DependentUpon>
@@ -562,11 +709,50 @@
     <EmbeddedResource Include="Forms\FColorful.resx">
       <DependentUpon>FColorful.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Stage\Stage1.resx">
+      <DependentUpon>Stage1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stage\Stage2.resx">
+      <DependentUpon>Stage2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stage\Stage3.resx">
+      <DependentUpon>Stage3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stage\Stage4.resx">
+      <DependentUpon>Stage4.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Units\FCommon.resx">
       <DependentUpon>FCommon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utils\PictureZoomIn.resx">
       <DependentUpon>PictureZoomIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Distribution\Dim2Line.resx">
+      <DependentUpon>Dim2Line.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Distribution\Hierachical_Display.resx">
+      <DependentUpon>Hierachical_Display.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Distribution\Multi_Feature_Object.resx">
+      <DependentUpon>Multi_Feature_Object.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Distribution\point2point.resx">
+      <DependentUpon>point2point.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Statistics\Box Plot.resx">
+      <DependentUpon>Box Plot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Temporal\Temporal D2L.resx">
+      <DependentUpon>Temporal D2L.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Temporal\Temporal Heuristics.resx">
+      <DependentUpon>Temporal Heuristics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Temporal\Temporal MFO.resx">
+      <DependentUpon>Temporal MFO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Visualization\Temporal\Temporal Scatter.resx">
+      <DependentUpon>Temporal Scatter.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>

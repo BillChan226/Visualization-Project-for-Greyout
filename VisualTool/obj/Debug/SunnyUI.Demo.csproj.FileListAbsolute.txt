@@ -187,3 +187,17 @@ F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool
 F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\SunnyUI.Demo.pdb
 F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Dataview.resources
 F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Utils.PictureZoomIn.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Stage.Stage1.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Stage.Stage2.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Stage.Stage3.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Stage.Stage4.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Dataset.DataAnalysis.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Distribution.Dim2Line.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Distribution.Hierachical_Display.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Distribution.point2point.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Statistics.Box_Plot.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Distribution.Multi_Feature_Object.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Temporal.Temporal_D2L.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Temporal.Temporal_Heuristics.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Temporal.Temporal_MFO.resources
+F:\SJTU\Projects\Graduation Project\Visualization-Project-for-Greyout\VisualTool\obj\Debug\Sunny.UI.Demo.Visualization.Temporal.Temporal_Scatter.resources

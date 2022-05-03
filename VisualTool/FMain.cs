@@ -20,13 +20,35 @@ namespace Sunny.UI.Demo
         public FMain()
         {
             InitializeComponent();
-            
+
+            int H_pageIndex = 900;
+            //TreeNode H_parent = Header.CreateNode("Stage 1", H_pageIndex);
+            Header.SetNodePageIndex(Header.Nodes[0], H_pageIndex);
+            AddPage(new Stage.Stage1(), H_pageIndex);
+            Header.SetNodeSymbol(Header.Nodes[0], 62105);
+
+            H_pageIndex++;
+            Header.SetNodePageIndex(Header.Nodes[1], H_pageIndex);
+            AddPage(new Stage.Stage2(), H_pageIndex);
+            Header.SetNodeSymbol(Header.Nodes[1], 61953);
+
+            H_pageIndex++;
+            Header.SetNodePageIndex(Header.Nodes[2], H_pageIndex);
+            AddPage(new Stage.Stage3(), H_pageIndex);
+            Header.SetNodeSymbol(Header.Nodes[2], 61633);
+
+            H_pageIndex++;
+            Header.SetNodePageIndex(Header.Nodes[3], H_pageIndex);
+            AddPage(new Stage.Stage4(), H_pageIndex);
+            Header.SetNodeSymbol(Header.Nodes[3], 61712);
+
             int pageIndex = 1000;
-            Header.SetNodePageIndex(Header.Nodes[0], pageIndex);
-            Header.SetNodeSymbol(Header.Nodes[0], 61451);
-            TreeNode parent = Aside.CreateNode("Dataset", 61451, 24, pageIndex);
+            //Header.SetNodePageIndex(Header.Nodes[0], pageIndex);
+            //Header.SetNodeSymbol(Header.Nodes[0], 61451);
+            TreeNode parent = Aside.CreateNode("Data Selector", 61451, 24, pageIndex);
             //TreeNode parent = Aside.CreateNode("Dataset", AddPage(new FAvatar(), ++pageIndex));
-            Aside.CreateChildNode(parent, AddPage(new Dataview(), ++pageIndex));
+            AddPage(new Dataview(), pageIndex);
+            
             //通过设置PageIndex关联，节点文字、图标由相应的Page的Text、Symbol提供
             //
             //Aside.CreateChildNode(parent, AddPage(new FAvatar(), ++pageIndex));
@@ -55,32 +77,54 @@ namespace Sunny.UI.Demo
             //Aside.ShowTips = true;
             //Aside.SetNodeTipsText(Aside.Nodes[0], "6", Color.Red, Color.White);
             //Aside.SetNodeTipsText(parent.Nodes[1], " ", Color.Lime, Color.White);
-            
+
             pageIndex = 2000;
-            Header.SetNodePageIndex(Header.Nodes[1], pageIndex);
-            Header.SetNodeSymbol(Header.Nodes[1], 61818);
-            parent = Aside.CreateNode("Data Flow", 61818, 24, pageIndex);
+            //Header.SetNodePageIndex(Header.Nodes[1], pageIndex);
+            //Header.SetNodeSymbol(Header.Nodes[1], 61818);
+            parent = Aside.CreateNode("Data Analysis", 61818, 24, pageIndex);
+            AddPage(new Dataset.DataAnalysis(), pageIndex);
+            //AddPage(new FDialogs(), Guid.NewGuid());
             //通过设置GUID关联，节点字体图标和大小由UIPage设置
             //Aside.CreateChildNode(parent, AddPage(new FDialogs(), Guid.NewGuid()));
             //Aside.CreateChildNode(parent, AddPage(new FEditor(), Guid.NewGuid()));
             //Aside.CreateChildNode(parent, AddPage(new FFrames(), Guid.NewGuid()));
 
             pageIndex = 3000;
-            Header.SetNodePageIndex(Header.Nodes[2], pageIndex);
-            Header.SetNodeSymbol(Header.Nodes[2], 61950);
+            //Header.SetNodePageIndex(Header.Nodes[2], pageIndex);
+            //Header.SetNodeSymbol(Header.Nodes[2], 61950);
             parent = Aside.CreateNode("Dimension Reduction", 61950, 24, pageIndex);
             //直接关联（默认自动生成GUID）
-            //Aside.CreateChildNode(parent, AddPage(new FBarChart()));
             //Aside.CreateChildNode(parent, AddPage(new FDoughnutChart()));
             //Aside.CreateChildNode(parent, AddPage(new FLineChart()));
             //Aside.CreateChildNode(parent, AddPage(new FPieChart()));
 
             pageIndex = 4000;
-            Header.SetNodePageIndex(Header.Nodes[3], pageIndex);
-            Header.SetNodeSymbol(Header.Nodes[3], 362614);
+            //Header.SetNodePageIndex(Header.Nodes[3], pageIndex);
+            //Header.SetNodeSymbol(Header.Nodes[3], 362614);
             parent = Aside.CreateNode("Visualization", 362614, 24, pageIndex);
-            //直接关联（默认自动生成GUID）
 
+            TreeNode CN_Pro = Aside.CreateChildNode(parent, AddPage(new Visualization.Statistics.Statistics(), ++pageIndex));
+            Aside.CreateChildNode(CN_Pro, AddPage(new Visualization.Statistics.Histogram(), ++pageIndex));
+            Aside.CreateChildNode(CN_Pro, AddPage(new Visualization.Statistics.KDE(), ++pageIndex));
+            Aside.CreateChildNode(CN_Pro, AddPage(new Visualization.Statistics.Box_Plot(), ++pageIndex));
+            Aside.CreateChildNode(CN_Pro, AddPage(new Visualization.Statistics.Heatmap(), ++pageIndex));
+
+            TreeNode CN_Dis = Aside.CreateChildNode(parent, AddPage(new Visualization.Distribution.Distribution(), ++pageIndex));
+            TreeNode CN_CN_P2P = Aside.CreateChildNode(CN_Dis, AddPage(new Visualization.Distribution.point2point(), ++pageIndex));
+
+            Aside.CreateChildNode(CN_CN_P2P, AddPage(new Visualization.Distribution.Scatter(), ++pageIndex));
+            Aside.CreateChildNode(CN_CN_P2P, AddPage(new Visualization.Distribution.Line(), ++pageIndex));
+            Aside.CreateChildNode(CN_Dis, AddPage(new Visualization.Distribution.Dim2Line(), ++pageIndex));
+            Aside.CreateChildNode(CN_Dis, AddPage(new Visualization.Distribution.Heuristics(), ++pageIndex));
+            Aside.CreateChildNode(CN_Dis, AddPage(new Visualization.Distribution.Hierachical_Display(), ++pageIndex));
+            Aside.CreateChildNode(CN_Dis, AddPage(new Visualization.Distribution.Multi_Feature_Object(), ++pageIndex));
+
+            TreeNode CN_Temp = Aside.CreateChildNode(parent, AddPage(new Visualization.Temporal.Temporal(), ++pageIndex));
+            Aside.CreateChildNode(CN_Temp, AddPage(new Visualization.Temporal.Temporal_Scatter(), ++pageIndex));
+            Aside.CreateChildNode(CN_Temp, AddPage(new Visualization.Temporal.Temporal_D2L(), ++pageIndex));
+            Aside.CreateChildNode(CN_Temp, AddPage(new Visualization.Temporal.Temporal_Heuristics(), ++pageIndex));
+            Aside.CreateChildNode(CN_Temp, AddPage(new Visualization.Temporal.Temporal_MFO(), ++pageIndex));
+            //直接关联（默认自动生成GUID）
             //Aside.CreateChildNode(parent, AddPage(CreateInstance<UIPage>("Sunny.UI.Demo.FPipe")));
             //Aside.CreateChildNode(parent, AddPage(CreateInstance<UIPage>("Sunny.UI.Demo.FMeter")));
             //Aside.CreateChildNode(parent, AddPage(CreateInstance<UIPage>("Sunny.UI.Demo.FLed")));
@@ -93,13 +137,13 @@ namespace Sunny.UI.Demo
                 Header.CreateChildNode(Header.Nodes[4], style.DisplayText(), style.Value());
             }
 
-            Header.CreateChildNode(Header.Nodes[4], "Colorful", UIStyle.Colorful.Value());
+            //Header.CreateChildNode(Header.Nodes[4], "Colorful", UIStyle.Colorful.Value());
             //直接增加一个页面，不在左侧列表显示
             AddPage(new FColorful());
             AddPage(new FCommon());
-
+           
             //选中第一个节点
-            Aside.SelectPage(1002);
+            Aside.SelectPage(1000);
 
             Text = Version;
             RegisterHotKey(UI.ModifierKeys.Shift, Keys.F8);
@@ -110,15 +154,14 @@ namespace Sunny.UI.Demo
                 page.Text.WriteConsole();
 
             //根据页面索引获取页面
-            UIPage page1 = GetPage(1002);
+            UIPage page1 = GetPage(1000);
             if (page1 != null)
                 page1.Text.WriteConsole();
-
-
+            
 
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Enabled = true;
-            timer.Interval = 200;//4秒执行间隔时间,单位为毫秒   
+            timer.Interval = 200;//0.2秒执行间隔时间,单位为毫秒   
             timer.Start();
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Footnet_Present);          // timer.Stop();停止
         }
@@ -138,15 +181,19 @@ namespace Sunny.UI.Demo
 
         private void Header_MenuItemClick(string text, int menuIndex, int pageIndex)
         {
+            SelectPage(pageIndex);
+    
             switch (menuIndex)
             {
                 case 4:
                     UIStyle style = (UIStyle)pageIndex;
                     if (style != UIStyle.Colorful)
+                    {
                         StyleManager.Style = style;
+                        uiLabel1.BackColor = this.RectColor;
+                    }
                     else
                         SelectPage(pageIndex);
-
                     break;
                 default:
                     Aside.SelectPage(pageIndex);
@@ -158,16 +205,17 @@ namespace Sunny.UI.Demo
         {
             if (page != null)
                 Console.WriteLine(page.Text);
+                UIPage page1 = page;
         }
 
         private void 关于ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            UIMessageBox.Show(Version, "关于", Style, UIMessageBoxButtons.OK, false);
+            UIMessageBox.Show("Software Support for the Bachelor Thesis of Zhaorun CHEN", "About", Style, UIMessageBoxButtons.OK, false);
         }
 
         private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://gitee.com/yhuse/SunnyUI");
+            System.Diagnostics.Process.Start("https://github.com/BillChan226/Visualization-Project-for-Greyout");
         }
 
         private void FMain_HotKeyEventHandler(object sender, HotKeyEventArgs e)
@@ -181,6 +229,7 @@ namespace Sunny.UI.Demo
         private void Aside_MenuItemClick(TreeNode node, NavMenuItem item, int pageIndex)
         {
             Footer.Text = "PageIndex: " + pageIndex;
+            SelectPage(pageIndex);
         }
 
 
@@ -255,7 +304,8 @@ namespace Sunny.UI.Demo
             catch (Exception)
             {
                 writer = null;
-                MessageBox.Show("连接服务器失败!");
+                //MessageBox.Show("连接服务器失败!");
+                //ShowErrorTip("No Dataset to Analyze!");
                 return null;
             }
             //将请求参数写入流
